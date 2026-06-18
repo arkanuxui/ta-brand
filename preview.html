@@ -170,16 +170,15 @@ a { color: inherit; }
 
 /* ---------- Full-width page footer ---------- */
 .site-footer { border-top: 1px solid var(--line); margin-top: 48px; }
-.footer-inner { max-width: 1520px; margin: 0 auto; padding: 36px var(--gap) 30px; }
+.footer-inner { max-width: 1520px; margin: 0 auto; padding: 26px var(--gap); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 18px 40px; }
 .footer-wordmark { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; font-size: 18px; color: var(--text); }
 .footer-tagline { margin: 6px 0 0; color: var(--muted); font-size: 14px; max-width: 48ch; }
-.footer-links { display: flex; flex-wrap: wrap; gap: 18px; margin: 20px 0 16px; padding: 0; list-style: none; }
-.footer-links a { text-decoration: none; color: var(--muted); font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; transition: color 120ms ease; }
+.footer-meta { display: flex; flex-direction: column; gap: 12px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.footer-links a { text-decoration: none; color: var(--text); font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; transition: color 120ms ease; }
 .footer-links a:hover { color: var(--label); }
-.footer-social { margin-top: 0; }
-.footer-social a { color: var(--text); }
-.footer-social a:hover { color: var(--label); }
 .footer-copy { margin: 0; color: var(--faint); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; }
+@media (min-width: 720px) { .footer-meta { align-items: flex-end; text-align: right; } }
 
 .subhead { font-size: 13px; margin: 32px 0 10px; }
 .note { color: var(--muted); margin: 0 0 16px; }
@@ -596,20 +595,17 @@ a { color: inherit; }
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-wordmark">Tailored Applications</div>
-    <p class="footer-tagline">Made-to-measure software, concept to launch — and a brand built to fit.</p>
-    <ul class="footer-links">
-      <li><a href="#introduction" data-spy="introduction">Introduction</a></li>
-      <li><a href="#logo" data-spy="logo">Logo</a></li>
-      <li><a href="#color" data-spy="color">Color</a></li>
-      <li><a href="#typography" data-spy="typography">Typography</a></li>
-      <li><a href="#tone-voice" data-spy="tone-voice">Tone &amp; Voice</a></li>
-    </ul>
-    <ul class="footer-links footer-social">
-      <li><a href="https://tailored-apps.io" target="_blank" rel="noopener">tailored-apps.io</a></li>
-      <li><a href="https://www.linkedin.com/company/tailored-applications/" target="_blank" rel="noopener">LinkedIn</a></li>
-    </ul>
-    <p class="footer-copy">© 2026 Tailored Applications. All rights reserved.</p>
+    <div class="footer-brand">
+      <div class="footer-wordmark">Tailored Applications</div>
+      <p class="footer-tagline">Made-to-measure software, concept to launch — and a brand built to fit.</p>
+    </div>
+    <div class="footer-meta">
+      <ul class="footer-links footer-social">
+        <li><a href="https://tailored-apps.io" target="_blank" rel="noopener">tailored-apps.io</a></li>
+        <li><a href="https://www.linkedin.com/company/tailored-applications/" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Tailored Applications. All rights reserved.</p>
+    </div>
   </div>
 </footer>
 

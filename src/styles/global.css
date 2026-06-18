@@ -190,6 +190,26 @@ a { color: inherit; }
 .logo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin: 40px 0; }
 .logo-row-text { min-width: 0; }
 
+/* Logo page — section group headers (a clear tier above the sub-parts) */
+.logo-part { margin: 52px 0 22px; padding-top: 30px; border-top: 1px solid var(--line); }
+.logo-part:first-of-type { margin-top: 6px; padding-top: 0; border-top: 0; }
+.logo-part-num { display: block; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--label); font-size: 12px; font-weight: 500; margin-bottom: 8px; }
+.logo-part-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 3vw, 28px); letter-spacing: -0.02em; color: var(--text); margin: 0; }
+
+/* Combination-logo misuse demos (real logo distorted via CSS, on white) */
+.specimen.misuse { position: relative; background: #fff; padding: 13% 16%; }
+.specimen.misuse img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+.specimen.misuse::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top left, transparent calc(50% - 1px), var(--red), transparent calc(50% + 1px)); }
+.m-stretch img { transform: scaleX(1.4); }
+.m-compress img { transform: scaleX(0.6); }
+.m-rotate img { transform: rotate(-12deg); }
+.m-skew img { transform: skewX(-14deg); }
+.m-recolor img { filter: hue-rotate(150deg) saturate(1.6); }
+.m-gray img { filter: grayscale(1); }
+.m-fade img { opacity: 0.3; }
+.m-blur img { filter: blur(2.5px); }
+.m-invert img { filter: invert(1); }
+
 /* ---------- Color swatches ---------- */
 .swatch { border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow); }
 .swatch .chip { height: 110px; }

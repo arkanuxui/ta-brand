@@ -214,6 +214,26 @@ a { color: inherit; }
 .logo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin: 40px 0; }
 .logo-row-text { min-width: 0; }
 
+/* Logo page — section group headers (a clear tier above the sub-parts) */
+.logo-part { margin: 52px 0 22px; padding-top: 30px; border-top: 1px solid var(--line); }
+.logo-part:first-of-type { margin-top: 6px; padding-top: 0; border-top: 0; }
+.logo-part-num { display: block; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--label); font-size: 12px; font-weight: 500; margin-bottom: 8px; }
+.logo-part-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 3vw, 28px); letter-spacing: -0.02em; color: var(--text); margin: 0; }
+
+/* Combination-logo misuse demos (real logo distorted via CSS, on white) */
+.specimen.misuse { position: relative; background: #fff; padding: 13% 16%; }
+.specimen.misuse img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+.specimen.misuse::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top left, transparent calc(50% - 1px), var(--red), transparent calc(50% + 1px)); }
+.m-stretch img { transform: scaleX(1.4); }
+.m-compress img { transform: scaleX(0.6); }
+.m-rotate img { transform: rotate(-12deg); }
+.m-skew img { transform: skewX(-14deg); }
+.m-recolor img { filter: hue-rotate(150deg) saturate(1.6); }
+.m-gray img { filter: grayscale(1); }
+.m-fade img { opacity: 0.3; }
+.m-blur img { filter: blur(2.5px); }
+.m-invert img { filter: invert(1); }
+
 /* ---------- Color swatches ---------- */
 .swatch { border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow); }
 .swatch .chip { height: 110px; }
@@ -335,7 +355,10 @@ a { color: inherit; }
       <h2 class="section-title">Logo <a class="anchor" href="#logo" aria-label="Copy link to section">#</a></h2>
       <p class="lede">How to use the Tailored Applications logo, its one-color treatments, and where it must not go.</p>
 
-      <p class="subhead">Section 1 — Primary logo</p>
+      <div class="logo-part">
+        <span class="logo-part-num">Section 1</span>
+        <h3 class="logo-part-title">Combination logo</h3>
+      </div>
 
       <div class="card logo-primary">
         <div class="specimen"><img src="public/logo/section-1/combination-logo.png" alt="Tailored Applications primary combination logo" /></div>
@@ -359,7 +382,10 @@ a { color: inherit; }
         <div class="card"><div class="specimen"><img src="public/logo/section-1/minimum-size.png" alt="Logo minimum size" /></div></div>
       </div>
 
-      <p class="subhead">Section 2 — Logo color treatments</p>
+      <div class="logo-part">
+        <span class="logo-part-num">Section 2</span>
+        <h3 class="logo-part-title">Logo color treatments</h3>
+      </div>
 
       <!-- ===== Full-color (primary lockup) ===== -->
       <p class="subhead" style="margin-top:18px;">Full-color wordmark — correct use</p>
@@ -437,7 +463,10 @@ a { color: inherit; }
         <div class="card"><div class="card-label">Don't place on red</div><div class="specimen"><img src="public/logo/section-2-4/ta-black-wordmark-do-not-use-on-red.png" alt="Incorrect: black wordmark on the brand red" /></div></div>
       </div>
 
-      <p class="subhead">Section 3 — In context &amp; misuse</p>
+      <div class="logo-part">
+        <span class="logo-part-num">Section 3</span>
+        <h3 class="logo-part-title">In context</h3>
+      </div>
       <p class="note">Mockup gallery — the logo applied across real-world surfaces.</p>
       <div class="grid grid-2">
         <div class="card"><div class="specimen"><img src="public/logo/section-3/ta-combination-logo-mockup-01.png" alt="Logo in a website navigation bar" /></div></div>
@@ -445,14 +474,56 @@ a { color: inherit; }
         <div class="card"><div class="specimen"><img src="public/logo/section-3/ta-combination-logo-mockup-02.png" alt="Logo in an email signature on a laptop" /></div></div>
         <div class="card"><div class="specimen"><img src="public/logo/section-3/ta-combination-logo-mockup-03.png" alt="Logo on a social media post" /></div></div>
       </div>
-      <p class="note">Do not use — incorrect applications.</p>
-      <div class="grid grid-3 dont">
-        <div class="card"><div class="card-label">Don't stretch</div><div class="specimen"><span class="placeholder-logo">TA</span></div></div>
-        <div class="card"><div class="card-label">Don't recolor</div><div class="specimen"><span class="placeholder-logo">TA</span></div></div>
-        <div class="card"><div class="card-label">Don't add effects</div><div class="specimen"><span class="placeholder-logo">TA</span></div></div>
+      <div class="logo-part">
+        <span class="logo-part-num">Section 4</span>
+        <h3 class="logo-part-title">Misuse</h3>
+      </div>
+      <p class="note">Our logo is the signature on everything we make — the shortest version of our promise. <strong style="color:var(--label);">It's precious to us, so please treat it with care.</strong> Give it room to breathe, keep it whole, and never bend it to fit. Look after these few rules and the mark looks after us — earning recognition and trust everywhere it appears.</p>
+      <div class="grid grid-3">
+        <div class="card"><div class="card-label">Don't stretch</div><div class="specimen misuse m-stretch"><img src="public/logo/section-2-1/ta-full-color-wordmark-over-white.png" alt="" /></div></div>
+        <div class="card"><div class="card-label">Don't compress</div><div class="specimen misuse m-compress"><img src="public/logo/section-2-1/ta-full-color-wordmark-over-white.png" alt="" /></div></div>
+        <div class="card"><div class="card-label">Don't rotate</div><div class="specimen misuse m-rotate"><img src="public/logo/section-2-1/ta-full-color-wordmark-over-white.png" alt="" /></div></div>
+        <div class="card"><div class="card-label">Don't skew</div><div class="specimen misuse m-skew"><img src="public/logo/section-2-1/ta-full-color-wordmark-over-white.png" alt="" /></div></div>
+        <div class="card"><div class="card-label">Don't recolor</div><div class="specimen misuse m-recolor"><img src="public/logo/section-2-1/ta-full-color-wordmark-over-white.png" alt="" /></div></div>
+        <div class="card"><div class="card-label">Don't desaturate</div><div class="specimen misuse m-gray"><img src="public/logo/section-2-1/ta-full-color-wordmark-over-white.png" alt="" /></div></div>
+        <div class="card"><div class="card-label">Don't reduce opacity</div><div class="specimen misuse m-fade"><img src="public/logo/section-2-1/ta-full-color-wordmark-over-white.png" alt="" /></div></div>
+        <div class="card"><div class="card-label">Don't blur</div><div class="specimen misuse m-blur"><img src="public/logo/section-2-1/ta-full-color-wordmark-over-white.png" alt="" /></div></div>
+        <div class="card"><div class="card-label">Don't invert</div><div class="specimen misuse m-invert"><img src="public/logo/section-2-1/ta-full-color-wordmark-over-white.png" alt="" /></div></div>
       </div>
 
-      <div class="download"><span class="dl-icon">↓</span><span class="dl-text"><strong>Download Logo Assets</strong><small>Single .zip · folders for digital and print uses</small></span></div>
+      <div class="logo-part">
+        <span class="logo-part-num">Section 5</span>
+        <h3 class="logo-part-title">The mark</h3>
+      </div>
+      <p class="note">The standalone mark — for avatars, app icons, favicons, and tight spaces where the full lockup won't fit. Placeholders for now; drop the mark images in and they'll slot in.</p>
+
+      <div class="card logo-primary"><div class="specimen">Mark</div></div>
+
+      <hr class="logo-sep" />
+
+      <div class="logo-row">
+        <div class="logo-row-text">
+          <p class="subhead" style="margin:0 0 8px;">Clearspace</p>
+          <p class="note" style="margin:0;">Keep clear space around the mark on all sides — exact value to confirm.</p>
+        </div>
+        <div class="card"><div class="specimen">Mark clearspace</div></div>
+      </div>
+
+      <div class="logo-row">
+        <div class="logo-row-text">
+          <p class="subhead" style="margin:0 0 8px;">Minimum size</p>
+          <p class="note" style="margin:0;">Don't reproduce the mark below its minimum size — values to confirm.</p>
+        </div>
+        <div class="card"><div class="specimen">Mark minimum size</div></div>
+      </div>
+
+      <p class="subhead">Mark color treatments</p>
+      <div class="grid grid-4">
+        <div class="card"><div class="card-label">Full-color</div><div class="specimen">Mark</div></div>
+        <div class="card"><div class="card-label">Red</div><div class="specimen">Mark</div></div>
+        <div class="card"><div class="card-label">White</div><div class="specimen dark">Mark</div></div>
+        <div class="card"><div class="card-label">Black</div><div class="specimen">Mark</div></div>
+      </div>
     </section>
 
     <section class="section" id="color">

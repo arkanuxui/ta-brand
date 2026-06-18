@@ -193,6 +193,11 @@ a { color: inherit; }
 .dont .specimen { position: relative; }
 .dont .specimen::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top left, transparent calc(50% - 1px), var(--red), transparent calc(50% + 1px)); }
 
+/* ---------- Logo — Section 1 (stacked: full-width primary, then text + image rows) ---------- */
+.logo-primary { margin: 14px 0; }
+.logo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; margin: 16px 0; }
+.logo-row-text { min-width: 0; }
+
 /* ---------- Color swatches ---------- */
 .swatch { border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow); }
 .swatch .chip { height: 110px; }
@@ -259,7 +264,7 @@ a { color: inherit; }
   .scrim.show { display: block; }
   .main { max-width: 100%; padding-top: 52px; }
   .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .tnt, .grid-2 { grid-template-columns: 1fr; }
+  .tnt, .grid-2, .logo-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 540px) { .grid-3, .grid-4 { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }

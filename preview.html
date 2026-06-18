@@ -214,6 +214,11 @@ a { color: inherit; }
 .dont .specimen { position: relative; }
 .dont .specimen::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top left, transparent calc(50% - 1px), var(--red), transparent calc(50% + 1px)); }
 
+/* ---------- Logo — Section 1 (stacked: full-width primary, then text + image rows) ---------- */
+.logo-primary { margin: 14px 0; }
+.logo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; margin: 16px 0; }
+.logo-row-text { min-width: 0; }
+
 /* ---------- Color swatches ---------- */
 .swatch { border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; box-shadow: var(--shadow); }
 .swatch .chip { height: 110px; }
@@ -280,7 +285,7 @@ a { color: inherit; }
   .scrim.show { display: block; }
   .main { max-width: 100%; padding-top: 52px; }
   .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .tnt, .grid-2 { grid-template-columns: 1fr; }
+  .tnt, .grid-2, .logo-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 540px) { .grid-3, .grid-4 { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
@@ -346,10 +351,26 @@ a { color: inherit; }
       <p class="lede">How to use the Tailored Applications logo, its one-color treatments, and where it must not go.</p>
 
       <p class="subhead">Section 1 — Primary logo</p>
-      <div class="grid grid-3">
-        <div class="card"><div class="card-label">Primary combination logo</div><div class="specimen"><span class="placeholder-logo">TA</span></div></div>
-        <div class="card"><div class="card-label">Clearspace</div><div class="specimen">Annotated guides</div></div>
-        <div class="card"><div class="card-label">Minimum size</div><div class="specimen"><span style="font-weight:700;">TA</span></div></div>
+
+      <div class="card logo-primary">
+        <div class="card-label">Primary combination logo</div>
+        <div class="specimen"><span class="placeholder-logo">TA</span></div>
+      </div>
+
+      <div class="logo-row">
+        <div class="logo-row-text">
+          <p class="subhead" style="margin:0 0 8px;">Clearspace</p>
+          <p class="note" style="margin:0;">Always keep clear space around the logo so it stays legible and uncluttered. Maintain a margin equal to the height of the "T" mark on every side, and keep type, imagery, and page edges outside this zone.</p>
+        </div>
+        <div class="card"><div class="specimen">Annotated guides</div></div>
+      </div>
+
+      <div class="logo-row">
+        <div class="logo-row-text">
+          <p class="subhead" style="margin:0 0 8px;">Minimum size</p>
+          <p class="note" style="margin:0;">To stay legible, never reproduce the logo below its minimum size — clearance values for screen and print to be confirmed. Below that threshold, use the standalone mark instead.</p>
+        </div>
+        <div class="card"><div class="specimen"><span style="font-weight:700;">TA</span></div></div>
       </div>
 
       <p class="subhead">Section 2 — One-color logo treatments</p>

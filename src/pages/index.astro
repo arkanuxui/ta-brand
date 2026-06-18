@@ -1,0 +1,318 @@
+---
+import '../styles/global.css';
+import CopyButton from '../components/CopyButton.jsx';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tailored Applications — Brand</title>
+  <meta name="description" content="The Tailored Applications brand hub: logo, color, typography, and tone & voice." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet" />
+  <meta name="theme-color" content="#ffffff" />
+  <!-- Set theme before first paint to avoid a flash of the wrong mode -->
+  <script is:inline>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b0f14' : '#ffffff');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div class="topline"></div>
+  <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+  <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  </button>
+  <div class="scrim" id="scrim"></div>
+
+  <div class="app">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar" id="sidebar">
+      <a class="wordmark" href="#introduction">
+        Tailored Applications
+        <span>Brand</span>
+      </a>
+      <hr class="divider" />
+      <ul class="nav">
+        <li><a href="#introduction" data-spy="introduction">Introduction</a></li>
+        <li><a href="#logo" data-spy="logo">Logo</a></li>
+        <li><a href="#color" data-spy="color">Color</a></li>
+        <li><a href="#typography" data-spy="typography">Typography</a></li>
+        <li><a href="#tone-voice" data-spy="tone-voice">Tone &amp; Voice</a></li>
+        <li><hr class="divider" /></li>
+        <li><div class="soon">Patterns <span class="badge">Coming soon</span></div></li>
+        <li><div class="soon">Illustration Style <span class="badge">Coming soon</span></div></li>
+        <li><div class="soon">Photography Style <span class="badge">Coming soon</span></div></li>
+      </ul>
+      <a class="download-all" href="#">
+        <span class="dl-icon">↓</span>
+        <span>Download All Assets<small>.zip</small></span>
+      </a>
+    </aside>
+
+    <!-- ===== Main ===== -->
+    <main class="main">
+
+      <!-- Introduction -->
+      <section class="section" id="introduction">
+        <p class="eyebrow">Brand hub</p>
+        <h1 class="intro-headline">The Tailored Applications brand hub — where our logo, color, type, and voice live, and stay consistent.</h1>
+        <p class="lede">A single reference for the team, partners, and vendors. View the rules, copy the values, and download the assets. Built to fit — the same idea behind the software.</p>
+      </section>
+
+      <!-- Logo -->
+      <section class="section" id="logo">
+        <p class="eyebrow">01 — Identity</p>
+        <h2 class="section-title">Logo <a class="anchor" href="#logo" aria-label="Copy link to section">#</a></h2>
+        <p class="lede">How to use the Tailored Applications logo, its one-color treatments, and where it must not go.</p>
+
+        <p class="subhead">Section 1 — Primary logo</p>
+        <div class="grid grid-3">
+          <div class="card"><div class="card-label">Primary combination logo</div><div class="specimen"><span class="placeholder-logo">TA</span></div></div>
+          <div class="card"><div class="card-label">Clearspace</div><div class="specimen">Annotated guides</div></div>
+          <div class="card"><div class="card-label">Minimum size</div><div class="specimen"><span style="font-weight:700;">TA</span></div></div>
+        </div>
+
+        <p class="subhead">Section 2 — One-color logo treatments</p>
+        <p class="note">Each treatment is shown with its use cases.</p>
+        <div class="grid grid-4">
+          <div class="card"><div class="card-label">One-color · Red</div><div class="specimen"><span class="placeholder-logo" style="color:#ef3340;">TA</span></div></div>
+          <div class="card"><div class="card-label">One-color · White</div><div class="specimen dark"><span class="placeholder-logo">TA</span></div></div>
+          <div class="card"><div class="card-label">One-color · Black</div><div class="specimen"><span class="placeholder-logo">TA</span></div></div>
+          <div class="card"><div class="card-label">Fourth treatment — to confirm</div><div class="specimen">?</div></div>
+        </div>
+        <p class="flag">Open question: the fourth one-color treatment isn't decided yet (brief listed red, white, black). Tell me what it should be and this slot updates.</p>
+
+        <p class="subhead">Section 3 — In context &amp; misuse</p>
+        <p class="note">Mockup gallery — the logo applied across real-world surfaces.</p>
+        <div class="grid grid-3">
+          <div class="card"><div class="specimen">Mockup</div></div>
+          <div class="card"><div class="specimen">Mockup</div></div>
+          <div class="card"><div class="specimen">Mockup</div></div>
+        </div>
+        <p class="note">Do not use — incorrect applications.</p>
+        <div class="grid grid-3 dont">
+          <div class="card"><div class="card-label">Don't stretch</div><div class="specimen"><span class="placeholder-logo">TA</span></div></div>
+          <div class="card"><div class="card-label">Don't recolor</div><div class="specimen"><span class="placeholder-logo">TA</span></div></div>
+          <div class="card"><div class="card-label">Don't add effects</div><div class="specimen"><span class="placeholder-logo">TA</span></div></div>
+        </div>
+
+        <div class="download">
+          <span class="dl-icon">↓</span>
+          <span class="dl-text"><strong>Download Logo Assets</strong><small>Single .zip · folders for digital and print uses</small></span>
+        </div>
+      </section>
+
+      <!-- Color -->
+      <section class="section" id="color">
+        <p class="eyebrow">02 — Color</p>
+        <h2 class="section-title">Color <a class="anchor" href="#color" aria-label="Copy link to section">#</a></h2>
+        <p class="lede">The palettes that make up the Tailored Applications brand, with copyable values.</p>
+
+        <p class="subhead">Primary colors</p>
+        <div class="grid grid-4">
+          <div class="swatch"><div class="chip" style="background:#ef3340;"></div><div class="meta"><div><div class="name">Red</div><div class="hex">#EF3340</div></div><CopyButton client:visible value="#EF3340" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#101820;"></div><div class="meta"><div><div class="name">Black</div><div class="hex">#101820</div></div><CopyButton client:visible value="#101820" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#f8f1e0;"></div><div class="meta"><div><div class="name">Off-White</div><div class="hex">#F8F1E0</div></div><CopyButton client:visible value="#F8F1E0" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#53565a;"></div><div class="meta"><div><div class="name">Gray</div><div class="hex">#53565A</div></div><CopyButton client:visible value="#53565A" /></div></div>
+        </div>
+
+        <p class="subhead">Red color palette</p>
+        <p class="note">Tints/shades of the brand red — values below are placeholder scales to confirm.</p>
+        <div class="grid grid-4">
+          <div class="swatch"><div class="chip" style="background:#fde7e8;"></div><div class="meta"><div><div class="name">Red 100</div><div class="hex">#FDE7E8</div></div><CopyButton client:visible value="#FDE7E8" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#ef3340;"></div><div class="meta"><div><div class="name">Red 500</div><div class="hex">#EF3340</div></div><CopyButton client:visible value="#EF3340" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#9e1f29;"></div><div class="meta"><div><div class="name">Red 800</div><div class="hex">#9E1F29</div></div><CopyButton client:visible value="#9E1F29" /></div></div>
+        </div>
+
+        <p class="subhead">Gray color palette</p>
+        <p class="note">Neutral grays around the brand gray — placeholder scale to confirm.</p>
+        <div class="grid grid-4">
+          <div class="swatch"><div class="chip" style="background:#eceae6;"></div><div class="meta"><div><div class="name">Gray 100</div><div class="hex">#ECEAE6</div></div><CopyButton client:visible value="#ECEAE6" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#53565a;"></div><div class="meta"><div><div class="name">Gray 500</div><div class="hex">#53565A</div></div><CopyButton client:visible value="#53565A" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#101820;"></div><div class="meta"><div><div class="name">Gray 900</div><div class="hex">#101820</div></div><CopyButton client:visible value="#101820" /></div></div>
+        </div>
+
+        <p class="subhead">Secondary colors</p>
+        <p class="flag">Open question: are there secondary colors beyond the four primaries? Placeholder shown.</p>
+        <div class="grid grid-4">
+          <div class="swatch"><div class="chip" style="background:#c9bea3;"></div><div class="meta"><div><div class="name">Secondary — TBD</div><div class="hex">#C9BEA3</div></div><CopyButton client:visible value="#C9BEA3" /></div></div>
+        </div>
+
+        <p class="subhead">Gradients</p>
+        <p class="note">Placeholder — confirm if the brand uses gradients.</p>
+        <div class="grid grid-2">
+          <div class="card"><div class="specimen" style="background:linear-gradient(120deg,#ef3340,#101820);color:#fff;">Gradient A</div></div>
+          <div class="card"><div class="specimen" style="background:linear-gradient(120deg,#f8f1e0,#ef3340);color:#101820;">Gradient B</div></div>
+        </div>
+
+        <p class="subhead">Color in use</p>
+        <p class="note">Mockups showing how the colors are applied.</p>
+        <div class="grid grid-3">
+          <div class="card"><div class="specimen">Mockup</div></div>
+          <div class="card"><div class="specimen">Mockup</div></div>
+          <div class="card"><div class="specimen">Mockup</div></div>
+        </div>
+      </section>
+
+      <!-- Typography -->
+      <section class="section" id="typography">
+        <p class="eyebrow">03 — Typography</p>
+        <h2 class="section-title">Typography <a class="anchor" href="#typography" aria-label="Copy link to section">#</a></h2>
+        <p class="lede">The IBM Plex super-family — one family carrying the brand across roles and languages.</p>
+
+        <p class="subhead">Section 1 — Why this family</p>
+        <p class="note">Restraint is the point: a single super-family keeps marketing, product, and documentation visibly related, while the mono cut gives engineering its own honest voice.</p>
+        <div class="card card-pad"><div style="font-family:var(--font-display);font-weight:700;font-size:44px;letter-spacing:-0.02em;">Aa Bb Cc 0123</div><div style="color:var(--muted);margin-top:8px;">IBM Plex Sans</div></div>
+
+        <p class="subhead">Section 2 — Four roles, one family</p>
+        <div class="grid grid-4">
+          <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Display &amp; Headings</div><div style="font-weight:700;font-size:30px;letter-spacing:-0.02em;">Aa</div><div style="font-weight:600;margin-top:6px;">IBM Plex Sans · Bold / SemiBold</div><small style="color:var(--muted)">Hero statements, page titles, section heads.</small></div>
+          <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Text &amp; UI</div><div style="font-weight:400;font-size:30px;">Aa</div><div style="font-weight:600;margin-top:6px;">IBM Plex Sans · Regular / Medium</div><small style="color:var(--muted)">Body copy, interface labels, buttons.</small></div>
+          <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Code &amp; Data</div><div class="mono" style="font-size:30px;">Aa</div><div style="font-weight:600;margin-top:6px;">IBM Plex Mono · Regular / Medium</div><small style="color:var(--muted)">Snippets, specs, version tags, eyebrows.</small></div>
+          <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Arabic &amp; Kurdish</div><div class="arabic" style="font-size:30px;font-weight:700;">تطبيقات</div><div style="font-weight:600;margin-top:6px;">IBM Plex Sans Arabic</div><small style="color:var(--muted)">Same family, RTL. Central Kurdish (Sorani).</small></div>
+        </div>
+
+        <p class="subhead">Section 3 — Type scale</p>
+        <div class="card card-pad">
+          <div class="scale-row"><span class="tag">Display</span><span class="demo" style="font-size:44px;">Tailored</span></div>
+          <div class="scale-row"><span class="tag">Heading</span><span class="demo" style="font-size:30px;">Tailored</span></div>
+          <div class="scale-row"><span class="tag">Body</span><span class="demo" style="font-size:18px;font-weight:400;">Tailored Applications</span></div>
+          <div class="scale-row" style="border-bottom:0;"><span class="tag">Mono</span><span class="demo mono" style="font-size:15px;font-weight:400;">v1.0.0 · spec</span></div>
+        </div>
+
+        <p class="subhead">Section 4 — Bilingual system</p>
+        <p class="note">English (Latin) and Central Kurdish / Arabic (RTL) in the same Plex family — verify shaping on live strings before sign-off.</p>
+        <div class="grid grid-2">
+          <div class="card card-pad"><div class="label" style="margin-bottom:6px;">English</div><div style="font-size:26px;font-weight:700;">Tailored Applications</div></div>
+          <div class="card card-pad"><div class="label" style="margin-bottom:6px;">کوردی / عربي</div><div class="arabic" style="font-size:26px;font-weight:700;">تطبیقات تەرخانکراو</div></div>
+        </div>
+
+        <div class="download">
+          <span class="dl-icon">↓</span>
+          <span class="dl-text"><strong>Download Font Families</strong><small>IBM Plex Sans · Mono · Sans Arabic</small></span>
+        </div>
+      </section>
+
+      <!-- Tone & Voice -->
+      <section class="section" id="tone-voice">
+        <p class="eyebrow">04 — Tone &amp; Voice</p>
+        <h2 class="section-title">Tone &amp; Voice <a class="anchor" href="#tone-voice" aria-label="Copy link to section">#</a></h2>
+        <p class="lede">How Tailored Applications sounds — confident, plain-spoken, and built to fit.</p>
+
+        <p class="subhead">Brand personality</p>
+        <div class="grid grid-3">
+          <div class="card card-pad"><strong>Attribute one</strong><div style="color:var(--muted)">placeholder</div></div>
+          <div class="card card-pad"><strong>Attribute two</strong><div style="color:var(--muted)">placeholder</div></div>
+          <div class="card card-pad"><strong>Attribute three</strong><div style="color:var(--muted)">placeholder</div></div>
+        </div>
+
+        <p class="subhead">Writing principles</p>
+        <p class="note">Placeholder — the rules we write by go here.</p>
+
+        <p class="subhead">This, not that</p>
+        <div class="tnt">
+          <div class="card card-pad yes"><div class="tnt-head">On-brand</div>Software that actually fits your business.</div>
+          <div class="card card-pad no"><div class="tnt-head">Off-brand</div>A synergistic, best-in-class enterprise solution.</div>
+        </div>
+
+        <p class="subhead">Words we use / avoid</p>
+        <div class="grid grid-2">
+          <div class="card card-pad"><strong>Use</strong><div style="color:var(--muted)">placeholder list</div></div>
+          <div class="card card-pad"><strong>Avoid</strong><div style="color:var(--muted)">placeholder list</div></div>
+        </div>
+
+        <p class="subhead">Examples in context</p>
+        <div class="grid grid-2">
+          <div class="card card-pad"><div class="label" style="margin-bottom:6px;">Button</div><div style="font-weight:600;">Explore our solutions</div></div>
+          <div class="card card-pad"><div class="label" style="margin-bottom:6px;">Error message</div><div style="font-weight:600;">Placeholder</div></div>
+        </div>
+      </section>
+
+      <!-- Coming soon -->
+      <section class="section" id="patterns">
+        <h2 class="section-title" style="color:var(--coming);">Patterns</h2>
+        <div class="soon-block"><span class="badge">Coming soon</span><div>This section will be added in a later phase.</div></div>
+      </section>
+      <section class="section" id="illustration">
+        <h2 class="section-title" style="color:var(--coming);">Illustration Style</h2>
+        <div class="soon-block"><span class="badge">Coming soon</span><div>This section will be added in a later phase.</div></div>
+      </section>
+      <section class="section" id="photography">
+        <h2 class="section-title" style="color:var(--coming);">Photography Style</h2>
+        <div class="soon-block"><span class="badge">Coming soon</span><div>This section will be added in a later phase.</div></div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    const links = Array.from(document.querySelectorAll('.nav a[data-spy]'));
+    const byId = {};
+    links.forEach((a) => { byId[a.dataset.spy] = a; });
+    const spied = ['introduction', 'logo', 'color', 'typography', 'tone-voice'];
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && byId[e.target.id]) {
+          links.forEach((a) => a.classList.remove('active'));
+          byId[e.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    spied.forEach((id) => { const el = document.getElementById(id); if (el) observer.observe(el); });
+
+    const btn = document.getElementById('menuBtn');
+    const sb = document.getElementById('sidebar');
+    const scrim = document.getElementById('scrim');
+    const close = () => { sb.classList.remove('open'); scrim.classList.remove('show'); };
+    btn?.addEventListener('click', () => { sb.classList.toggle('open'); scrim.classList.toggle('show'); });
+    scrim?.addEventListener('click', close);
+    document.querySelectorAll('.nav a').forEach((a) => a.addEventListener('click', close));
+
+    // Theme toggle
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+    const applyTheme = (theme) => {
+      root.setAttribute('data-theme', theme);
+      const isDark = theme === 'dark';
+      if (themeMeta) themeMeta.setAttribute('content', isDark ? '#0b0f14' : '#ffffff');
+      if (themeBtn) {
+        themeBtn.setAttribute('aria-pressed', String(isDark));
+        themeBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+    };
+    applyTheme(root.getAttribute('data-theme') || (mql.matches ? 'dark' : 'light'));
+    themeBtn?.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      applyTheme(next);
+    });
+    // Follow the OS only while the user hasn't made an explicit choice
+    mql.addEventListener('change', (e) => {
+      try { if (localStorage.getItem('theme')) return; } catch (err) {}
+      applyTheme(e.matches ? 'dark' : 'light');
+    });
+
+    document.querySelectorAll('.anchor').forEach((a) => {
+      a.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        const url = location.origin + location.pathname + a.getAttribute('href');
+        navigator.clipboard?.writeText(url);
+      });
+    });
+  </script>
+</body>
+</html>

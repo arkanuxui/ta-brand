@@ -46,9 +46,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="app">
     <!-- ===== Sidebar ===== -->
     <aside class="sidebar" id="sidebar">
-      <a class="wordmark" href="#introduction" data-spy="introduction">
-        Tailored Applications
-        <span>Brand</span>
+      <a class="wordmark" href="#introduction" data-spy="introduction" aria-label="Tailored Applications">
+        <span class="wordmark-logo" role="img" aria-label="Tailored Applications"></span>
       </a>
       <hr class="divider" />
       <ul class="nav">
@@ -57,10 +56,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <li><a href="#color" data-spy="color">Color</a></li>
         <li><a href="#typography" data-spy="typography">Typography</a></li>
         <li><a href="#tone-voice" data-spy="tone-voice">Tone &amp; Voice</a></li>
-        <li><hr class="divider" /></li>
         <li><div class="soon">Patterns <span class="badge">Coming soon</span></div></li>
-        <li><div class="soon">Illustration Style <span class="badge">Coming soon</span></div></li>
-        <li><div class="soon">Photography Style <span class="badge">Coming soon</span></div></li>
+        <li><div class="soon">Illustration <span class="badge">Coming soon</span></div></li>
+        <li><div class="soon">Photography <span class="badge">Coming soon</span></div></li>
       </ul>
       <div class="theme-toggle" role="group" aria-label="Color theme">
         <button type="button" class="theme-opt" data-theme-value="light" aria-pressed="false">
@@ -74,7 +72,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
       <a class="download-all" href="#">
         <span class="dl-icon">↓</span>
-        <span>Download All Assets<small>.zip</small></span>
+        <span>Download Assets<small>.zip</small></span>
       </a>
     </aside>
 
@@ -408,11 +406,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <div class="soon-block"><span class="badge">Coming soon</span><div>This section will be added in a later phase.</div></div>
       </section>
       <section class="section" id="illustration">
-        <h2 class="section-title" style="color:var(--coming);">Illustration Style</h2>
+        <h2 class="section-title" style="color:var(--coming);">Illustration</h2>
         <div class="soon-block"><span class="badge">Coming soon</span><div>This section will be added in a later phase.</div></div>
       </section>
       <section class="section" id="photography">
-        <h2 class="section-title" style="color:var(--coming);">Photography Style</h2>
+        <h2 class="section-title" style="color:var(--coming);">Photography</h2>
         <div class="soon-block"><span class="badge">Coming soon</span><div>This section will be added in a later phase.</div></div>
       </section>
 

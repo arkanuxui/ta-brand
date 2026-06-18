@@ -195,8 +195,6 @@ a { color: inherit; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); box-shadow: var(--shadow); overflow: hidden; }
 .card-pad { padding: 18px; }
 .card-label { color: var(--text); font-size: 11px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
-.card-note { margin: 0; padding: 10px 14px; font-size: 12px; line-height: 1.45; color: var(--muted); border-top: 1px solid var(--line); }
-#logo .grid > .card { align-self: start; }
 
 .specimen {
   aspect-ratio: 16 / 9; display: grid; place-items: center; color: var(--faint); font-weight: 500;
@@ -398,10 +396,17 @@ a { color: inherit; }
 
       <p class="subhead" style="margin-top:36px;">White wordmark — correct use</p>
       <p class="note">Use the white wordmark on dark or saturated brand backgrounds, and over suitably dark imagery.</p>
-      <div class="grid grid-3">
+      <div class="grid grid-2">
         <div class="card"><div class="card-label">On black</div><div class="specimen"><img src="public/logo/section2-2/ta-white-wordmark-over-black.png" alt="White wordmark on a black background" /></div></div>
         <div class="card"><div class="card-label">On red</div><div class="specimen"><img src="public/logo/section2-2/ta-white-wordmark-over-red.png" alt="White wordmark on the brand red" /></div></div>
-        <div class="card"><div class="card-label">On dark images</div><div class="specimen"><img src="public/logo/section2-2/ta-white-wordmark-use-on-dark-images.png" alt="White wordmark over a dark photograph" /></div><p class="card-note">When placing the white wordmark over imagery, apply a linear dark layer behind it — 100% at the bottom fading to 0% toward the top — and a slight progressive blur over the same area, strongest at the bottom and easing to 0 at the top, so the wordmark stays legible against the photo.</p></div>
+      </div>
+
+      <div class="logo-row">
+        <div class="logo-row-text">
+          <p class="subhead" style="margin:0 0 8px;">On dark images</p>
+          <p class="note" style="margin:0;">When placing the white wordmark over imagery, apply a linear dark layer behind it — 100% at the bottom fading to 0% toward the top — and a slight progressive blur over the same area, strongest at the bottom and easing to 0 at the top, so the wordmark stays legible against the photo.</p>
+        </div>
+        <div class="card"><div class="specimen"><img src="public/logo/section2-2/ta-white-wordmark-use-on-dark-images.png" alt="White wordmark over a dark photograph" /></div></div>
       </div>
 
       <p class="subhead" style="margin-top:28px;">White wordmark — do not use</p>

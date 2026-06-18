@@ -125,7 +125,7 @@ a { color: inherit; }
 .download-all small { display: block; font-family: var(--font-mono); font-weight: 400; opacity: 0.9; font-size: 11px; letter-spacing: 0.04em; margin-top: 3px; }
 
 /* ---------- Main ---------- */
-.main { flex: 1 1 auto; min-width: 0; max-width: var(--content-max); padding-top: 6px; }
+.main { flex: 1 1 auto; min-width: 0; padding-top: 6px; }
 /* Each section is a standalone "page" — only the active one is shown. */
 .section { display: none; padding: 28px 0 56px; }
 .section.is-active { display: block; }

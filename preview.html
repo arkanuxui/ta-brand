@@ -56,7 +56,7 @@
   --r-card: 18px;
   --r-lg: 22px;
   --r-pill: 999px;
-  --shadow: 0 1px 2px rgba(16, 24, 32, 0.04), 0 10px 30px rgba(16, 24, 32, 0.06);
+  --shadow: 0 1px 2px rgba(16, 24, 32, 0.05);
 
   /* Type — IBM Plex super-family */
   --font-display: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
@@ -86,7 +86,7 @@
   --yes: #3fbf83;           /* brighter green for dark */
   --label: #ff5a64;         /* lifted red so labels clear AA on dark surfaces */
   --accent-soft: rgba(239, 51, 64, 0.16);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.30), 0 12px 32px rgba(0, 0, 0, 0.55);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 * { box-sizing: border-box; }
@@ -162,6 +162,27 @@ a { color: inherit; }
 
 .lede { font-size: 19px; color: var(--muted); max-width: 60ch; margin: 0 0 8px; }
 .intro-headline { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; font-size: clamp(34px, 6vw, 60px); line-height: 1.04; margin: 6px 0 18px; color: var(--text); }
+.intro-body { font-size: 17px; color: var(--muted); max-width: 65ch; margin: 0 0 14px; }
+.intro-body strong { color: var(--text); font-weight: 600; }
+
+/* Full-width intro video (placeholder until a looping clip is added) */
+.intro-video {
+  margin: 30px 0 6px; width: 100%; aspect-ratio: 16 / 9;
+  border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow);
+  overflow: hidden; display: grid; place-items: center;
+  background:
+    linear-gradient(45deg, var(--hover) 25%, transparent 25%) -10px 0/22px 22px,
+    linear-gradient(-45deg, var(--hover) 25%, transparent 25%) -10px 0/22px 22px,
+    var(--surface);
+}
+.intro-video-media { width: 100%; height: 100%; object-fit: cover; display: block; }
+.intro-video-ph { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.intro-video-play {
+  width: 60px; height: 60px; border-radius: var(--r-pill);
+  background: var(--red); color: var(--accent-ink);
+  display: grid; place-items: center; box-shadow: var(--shadow);
+}
+.intro-video-play svg { width: 26px; height: 26px; margin-left: 3px; }
 
 .subhead { font-size: 13px; margin: 32px 0 10px; }
 .note { color: var(--muted); margin: 0 0 16px; }
@@ -173,12 +194,14 @@ a { color: inherit; }
 .card-label { font-size: 11px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
 
 .specimen {
-  min-height: 200px; display: grid; place-items: center; color: var(--faint); font-weight: 500;
+  aspect-ratio: 16 / 9; display: grid; place-items: center; color: var(--faint); font-weight: 500;
+  overflow: hidden;
   background:
     linear-gradient(45deg, var(--hover) 25%, transparent 25%) -10px 0/20px 20px,
     linear-gradient(-45deg, var(--hover) 25%, transparent 25%) -10px 0/20px 20px,
     var(--surface);
 }
+.specimen img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .specimen.dark { background: var(--ink); color: var(--faint); }
 .placeholder-logo { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; font-size: 30px; color: var(--text); }
 .specimen.dark .placeholder-logo { color: var(--cream); }
@@ -300,9 +323,21 @@ a { color: inherit; }
 
   <main class="main">
     <section class="section" id="introduction">
-      <p class="eyebrow">Brand hub</p>
-      <h1 class="intro-headline">The Tailored Applications brand hub — where our logo, color, type, and voice live, and stay consistent.</h1>
-      <p class="lede">A single reference for the team, partners, and vendors. View the rules, copy the values, and download the assets. Built to fit — the same idea behind the software.</p>
+      <p class="eyebrow">Introduction</p>
+      <h1 class="intro-headline">Welcome to the Tailored Applications brand guidelines.</h1>
+      <p class="lede">This is the system behind how Tailored Applications looks, sounds, and shows up — from a business card to a product screen. It's the brief we hand anyone designing, building, or writing for the brand, so everything feels like it came from one company.</p>
+      <p class="intro-body">Tailored Applications designs and builds custom digital products for enterprise and growing businesses, concept to launch. The brand carries that same idea: precise and technical, but warm and human — bold without shouting. Made-to-measure, like the apps we ship.</p>
+      <p class="intro-body"><strong>What's ready:</strong> the foundations are complete — the logo, color, typography, and voice &amp; tone that hold the brand together. <strong>Still in progress:</strong> the pattern, illustration style, and photography direction — we're still working on those.</p>
+      <p class="intro-body">Treat the finished foundations as fixed and the rest as a toolkit. When something isn't spelled out here, return to the spirit: clear, confident, and tailored to fit. Get these right and every touchpoint reinforces the same brand — the consistency that turns a mark into something people recognize and trust.</p>
+
+      <figure class="intro-video" role="img" aria-label="Brand video placeholder — a looping video will be added here">
+        <div class="intro-video-ph">
+          <span class="intro-video-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <span class="badge">Looping video · coming soon</span>
+        </div>
+      </figure>
     </section>
 
     <section class="section" id="logo">

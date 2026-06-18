@@ -43,7 +43,7 @@
   --muted: var(--gray);     /* secondary text */
   --faint: #8c8a82;         /* warm faint gray */
   --line: #e7ddc8;          /* warm hairline */
-  --hover: var(--hover);         /* warm hover / specimen checker / badge fill */
+  --hover: #f1ead7;         /* warm hover / specimen checker / badge fill */
   --soon-bg: #fcf7ea;       /* coming-soon panel */
   --coming: #b4ad9c;        /* muted warm gray for "coming soon" */
   --yes: #2e9e6b;           /* on-brand "yes" green */
@@ -229,20 +229,25 @@ a { color: inherit; }
 .menu-btn { display: none; position: fixed; top: 14px; left: 14px; z-index: 70; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 12px; width: 44px; height: 44px; font-size: 20px; cursor: pointer; color: var(--text); }
 .scrim { display: none; position: fixed; inset: 0; background: rgba(16, 24, 32, 0.4); z-index: 50; }
 
-/* ---------- Theme toggle ---------- */
-.theme-btn {
-  position: fixed; top: 14px; right: 14px; z-index: 70;
-  display: grid; place-items: center;
-  width: 44px; height: 44px; border-radius: 12px;
-  background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow);
-  color: var(--text); cursor: pointer; line-height: 1;
-  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+/* ---------- Theme toggle (segmented, in sidebar) ---------- */
+.theme-toggle {
+  margin-top: 14px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+  padding: 4px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 12px;
 }
-.theme-btn:hover { border-color: var(--faint); }
-.theme-btn svg { width: 20px; height: 20px; display: block; }
-.theme-btn .icon-sun { display: none; }
-[data-theme="dark"] .theme-btn .icon-sun { display: block; }
-[data-theme="dark"] .theme-btn .icon-moon { display: none; }
+.theme-opt {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  border: 0; background: transparent; cursor: pointer;
+  font-family: var(--font-mono); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); padding: 9px 8px; border-radius: 9px; line-height: 1;
+  transition: background 120ms ease, color 120ms ease;
+}
+.theme-opt svg { width: 15px; height: 15px; display: block; }
+.theme-opt:hover { color: var(--text); background: var(--hover); }
+.theme-opt[aria-pressed="true"] { color: var(--label); background: var(--accent-soft); font-weight: 600; }
 
 @media (max-width: 900px) {
   .app { padding: 16px; gap: 0; }
@@ -263,10 +268,6 @@ a { color: inherit; }
 <body>
 <div class="topline"></div>
 <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
-<button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark mode" aria-pressed="false">
-  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-</button>
 <div class="scrim" id="scrim"></div>
 
 <div class="app">
@@ -284,6 +285,16 @@ a { color: inherit; }
       <li><div class="soon">Illustration Style <span class="badge">Coming soon</span></div></li>
       <li><div class="soon">Photography Style <span class="badge">Coming soon</span></div></li>
     </ul>
+    <div class="theme-toggle" role="group" aria-label="Color theme">
+      <button type="button" class="theme-opt" data-theme-value="light" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        Light
+      </button>
+      <button type="button" class="theme-opt" data-theme-value="dark" aria-pressed="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        Dark
+      </button>
+    </div>
     <a class="download-all" href="#"><span class="dl-icon">↓</span><span>Download All Assets<small>.zip</small></span></a>
   </aside>
 
@@ -493,24 +504,20 @@ a { color: inherit; }
   })();
   (function () {
     var root = document.documentElement;
-    var themeBtn = document.getElementById('themeBtn');
+    var themeOpts = Array.prototype.slice.call(document.querySelectorAll('.theme-opt'));
     var themeMeta = document.querySelector('meta[name="theme-color"]');
     var mql = window.matchMedia('(prefers-color-scheme: dark)');
     function applyTheme(theme) {
       root.setAttribute('data-theme', theme);
-      var isDark = theme === 'dark';
-      if (themeMeta) themeMeta.setAttribute('content', isDark ? '#0b0f14' : '#ffffff');
-      if (themeBtn) {
-        themeBtn.setAttribute('aria-pressed', String(isDark));
-        themeBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-      }
+      if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#0b0f14' : '#ffffff');
+      themeOpts.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.themeValue === theme)); });
     }
     applyTheme(root.getAttribute('data-theme') || (mql.matches ? 'dark' : 'light'));
-    if (themeBtn) themeBtn.addEventListener('click', function () {
-      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    themeOpts.forEach(function (b) { b.addEventListener('click', function () {
+      var next = b.dataset.themeValue;
       try { localStorage.setItem('theme', next); } catch (e) {}
       applyTheme(next);
-    });
+    }); });
     mql.addEventListener('change', function (e) {
       try { if (localStorage.getItem('theme')) return; } catch (err) {}
       applyTheme(e.matches ? 'dark' : 'light');

@@ -21,12 +21,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- Set theme before first paint to avoid a flash of the wrong mode -->
   <script is:inline>
     (function () {
+      // Always start at the top (the video hero) instead of restoring the
+      // previous scroll position on reload.
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      // The wordmark/intro nav leaves "#introduction" in the URL; on reload
+      // that makes the browser jump past the hero. Drop it (runs before the
+      // browser scrolls to the fragment). Real deep links (#logo, #color, …)
+      // are still honored.
+      if (location.hash === '#introduction') history.replaceState(null, '', location.pathname + location.search);
       try {
         var stored = localStorage.getItem('theme');
         var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
         var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b0f14' : '#ffffff');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#090e13' : '#ffffff');
       } catch (e) {}
     })();
   </script>
@@ -35,6 +43,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="topline"></div>
   <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
   <div class="scrim" id="scrim"></div>
+
+  <!-- Full-screen brand video hero. Scrolls away to reveal the app + sidebar.
+       Swap the placeholder for a looping clip later:
+       <video class="hero-video-media" autoplay muted loop playsinline poster="…">
+         <source src="…" type="video/mp4" />
+       </video> -->
+  <section class="hero-video" aria-label="Brand video">
+    <div class="hero-video-ph">
+      <span class="hero-video-play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+      <span class="badge">Looping video · coming soon</span>
+    </div>
+  </section>
 
   <div class="app">
     <!-- ===== Sidebar ===== -->
@@ -82,19 +104,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <p class="intro-body">Tailored Applications designs and builds custom digital products for enterprise and growing businesses, concept to launch. The brand carries that same idea: precise and technical, but warm and human — bold without shouting. Made-to-measure, like the apps we ship.</p>
         <p class="intro-body"><strong>What's ready:</strong> the foundations are complete — the logo, color, typography, and voice &amp; tone that hold the brand together. <strong>Still in progress:</strong> the pattern, illustration style, and photography direction — we're still working on those.</p>
         <p class="intro-body">Treat the finished foundations as fixed and the rest as a toolkit. When something isn't spelled out here, return to the spirit: clear, confident, and tailored to fit. Get these right and every touchpoint reinforces the same brand — the consistency that turns a mark into something people recognize and trust.</p>
-
-        <!-- Full-width brand video. Placeholder for now — swap in a looping clip later:
-             <video class="intro-video-media" autoplay muted loop playsinline poster="…">
-               <source src="…" type="video/mp4" />
-             </video> -->
-        <figure class="intro-video" role="img" aria-label="Brand video placeholder — a looping video will be added here">
-          <div class="intro-video-ph">
-            <span class="intro-video-play" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-            </span>
-            <span class="badge">Looping video · coming soon</span>
-          </div>
-        </figure>
       </section>
 
       <!-- Logo -->
@@ -108,7 +117,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <!-- Primary combination logo — full width -->
         <div class="card logo-primary">
           <div class="card-label">Primary combination logo</div>
-          <div class="specimen"><img src={`${base}/logo/combination-logo.png`} alt="Tailored Applications primary combination logo" /></div>
+          <div class="specimen"><img src={`${base}/logo/section-1/combination-logo.png`} alt="Tailored Applications primary combination logo" /></div>
         </div>
 
         <hr class="logo-sep" />
@@ -119,27 +128,48 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <p class="subhead" style="margin:0 0 8px;">Clearspace</p>
             <p class="note" style="margin:0;">Always keep clear space around the logo so it stays legible and uncluttered. Maintain a margin equal to the height of the "T" mark on every side, and keep type, imagery, and page edges outside this zone.</p>
           </div>
-          <div class="card"><div class="specimen"><img src={`${base}/logo/clearspace.png`} alt="Logo clearspace guidelines" /></div></div>
+          <div class="card"><div class="specimen"><img src={`${base}/logo/section-1/clearspace.png`} alt="Logo clearspace guidelines" /></div></div>
         </div>
 
         <!-- Minimum size — brief text + image -->
         <div class="logo-row">
           <div class="logo-row-text">
             <p class="subhead" style="margin:0 0 8px;">Minimum size</p>
-            <p class="note" style="margin:0;">To stay legible, never reproduce the logo below its minimum size — clearance values for screen and print to be confirmed. Below that threshold, use the standalone mark instead.</p>
+            <p class="note" style="margin:0;">The width of the logo cannot be displayed smaller than 88 pixels (digital) or 2.328 cm (print). The height of the logo cannot be displayed smaller than 16 pixels (digital) or 0.42 cm (print).</p>
           </div>
-          <div class="card"><div class="specimen"><img src={`${base}/logo/minimum-size.png`} alt="Logo minimum size" /></div></div>
+          <div class="card"><div class="specimen"><img src={`${base}/logo/section-1/minimum-size.png`} alt="Logo minimum size" /></div></div>
         </div>
 
         <p class="subhead">Section 2 — One-color logo treatments</p>
-        <p class="note">Each treatment is shown with its use cases.</p>
-        <div class="grid grid-4">
-          <div class="card"><div class="card-label">One-color · Red</div><div class="specimen"><span class="placeholder-logo" style="color:#ef3340;">TA</span></div></div>
-          <div class="card"><div class="card-label">One-color · White</div><div class="specimen dark"><span class="placeholder-logo">TA</span></div></div>
-          <div class="card"><div class="card-label">One-color · Black</div><div class="specimen"><span class="placeholder-logo">TA</span></div></div>
-          <div class="card"><div class="card-label">Fourth treatment — to confirm</div><div class="specimen">?</div></div>
+
+        <p class="subhead" style="margin-top:18px;">Red wordmark — correct use</p>
+        <p class="note">The red wordmark is the primary one-color treatment. Use it on clean, high-contrast backgrounds.</p>
+        <div class="grid grid-2">
+          <div class="card"><div class="card-label">On white</div><div class="specimen"><img src={`${base}/logo/section2-1/ta-red-wordmark-over-white.png`} alt="Red wordmark on a white background" /></div></div>
+          <div class="card"><div class="card-label">On black</div><div class="specimen"><img src={`${base}/logo/section2-1/ta-red-wordmark-over-black.png`} alt="Red wordmark on a black background" /></div></div>
         </div>
-        <p class="flag">Open question: the fourth one-color treatment isn't decided yet (brief listed red, white, black). Tell me what it should be and this slot updates.</p>
+
+        <p class="subhead" style="margin-top:28px;">Red wordmark — do not use</p>
+        <div class="grid grid-2 dont">
+          <div class="card"><div class="card-label">Don't place on busy images</div><div class="specimen"><img src={`${base}/logo/section2-1/ta-red-wordmark-do-not-use-on-images.png`} alt="Incorrect: red wordmark placed over a busy photograph" /></div></div>
+          <div class="card"><div class="card-label">Don't place on red gradients</div><div class="specimen"><img src={`${base}/logo/section2-1/ta-red-wordmark-do-not-use-on-red-gradients.png`} alt="Incorrect: red wordmark on a low-contrast red gradient" /></div></div>
+        </div>
+
+        <p class="subhead" style="margin-top:36px;">White wordmark — correct use</p>
+        <p class="note">Use the white wordmark on dark or saturated brand backgrounds, and over suitably dark imagery.</p>
+        <div class="grid grid-3">
+          <div class="card"><div class="card-label">On black</div><div class="specimen"><img src={`${base}/logo/section2-2/ta-white-wordmark-over-black.png`} alt="White wordmark on a black background" /></div></div>
+          <div class="card"><div class="card-label">On red</div><div class="specimen"><img src={`${base}/logo/section2-2/ta-white-wordmark-over-red.png`} alt="White wordmark on the brand red" /></div></div>
+          <div class="card"><div class="card-label">On dark images</div><div class="specimen"><img src={`${base}/logo/section2-2/ta-white-wordmark-use-on-dark-images.png`} alt="White wordmark over a dark photograph" /></div></div>
+        </div>
+
+        <p class="subhead" style="margin-top:28px;">White wordmark — do not use</p>
+        <div class="grid grid-2 dont">
+          <div class="card"><div class="card-label">Don't place on light images</div><div class="specimen"><img src={`${base}/logo/section2-2/ta-white-wordmark-do-not-use-on-light-images.png`} alt="Incorrect: white wordmark on a bright, busy photograph" /></div></div>
+          <div class="card"><div class="card-label">Don't place on white/light gradients</div><div class="specimen"><img src={`${base}/logo/section2-2/ta-white-wordmark-do-not-use-on-white-gradients.png`} alt="Incorrect: white wordmark on a low-contrast light gradient" /></div></div>
+        </div>
+
+        <p class="flag">Black one-color version to follow — send it and it'll slot in here.</p>
 
         <p class="subhead">Section 3 — In context &amp; misuse</p>
         <p class="note">Mockup gallery — the logo applied across real-world surfaces.</p>
@@ -334,7 +364,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
     const applyTheme = (theme) => {
       root.setAttribute('data-theme', theme);
-      if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#0b0f14' : '#ffffff');
+      if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#090e13' : '#ffffff');
       themeOpts.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeValue === theme)));
     };
     applyTheme(root.getAttribute('data-theme') || (mql.matches ? 'dark' : 'light'));
@@ -356,6 +386,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         navigator.clipboard?.writeText(url);
       });
     });
+
+    // On a fresh load without a target anchor, start at the video hero.
+    if (!location.hash) window.scrollTo(0, 0);
   </script>
 </body>
 </html>

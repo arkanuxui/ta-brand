@@ -194,8 +194,9 @@ a { color: inherit; }
 .dont .specimen::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top left, transparent calc(50% - 1px), var(--red), transparent calc(50% + 1px)); }
 
 /* ---------- Logo — Section 1 (stacked: full-width primary, then text + image rows) ---------- */
-.logo-primary { margin: 14px 0; }
-.logo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; margin: 16px 0; }
+.logo-primary { margin: 18px 0 0; }
+.logo-sep { height: 1px; background: var(--line); border: 0; margin: 40px 0; }
+.logo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin: 40px 0; }
 .logo-row-text { min-width: 0; }
 
 /* ---------- Color swatches ---------- */

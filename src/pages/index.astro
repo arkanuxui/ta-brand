@@ -21,8 +21,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <!-- Set theme before first paint to avoid a flash of the wrong mode -->
   <script is:inline>
     (function () {
-      // Always start at the top (the video hero) instead of restoring the
-      // previous scroll position on reload.
+      // Always start each page at the top instead of restoring the previous
+      // scroll position on reload.
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       // The wordmark/intro nav leaves "#introduction" in the URL; on reload
       // that makes the browser jump past the hero. Drop it (runs before the
@@ -34,7 +34,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
         var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', theme === 'dark' ? '#090e13' : '#ffffff');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#191919' : '#ffffff');
       } catch (e) {}
     })();
   </script>
@@ -44,24 +44,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
   <div class="scrim" id="scrim"></div>
 
-  <!-- Full-screen brand video hero. Scrolls away to reveal the app + sidebar.
-       Swap the placeholder for a looping clip later:
-       <video class="hero-video-media" autoplay muted loop playsinline poster="…">
-         <source src="…" type="video/mp4" />
-       </video> -->
-  <section class="hero-video" aria-label="Brand video">
-    <div class="hero-video-ph">
-      <span class="hero-video-play" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-      </span>
-      <span class="badge">Looping video · coming soon</span>
-    </div>
-  </section>
-
   <div class="app">
     <!-- ===== Sidebar ===== -->
     <aside class="sidebar" id="sidebar">
-      <a class="wordmark" href="#introduction">
+      <a class="wordmark" href="#introduction" data-spy="introduction">
         Tailored Applications
         <span>Brand</span>
       </a>
@@ -380,28 +366,56 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </main>
   </div>
 
-  <script>
-    const links = Array.from(document.querySelectorAll('.nav a[data-spy]'));
-    const byId = {};
-    links.forEach((a) => { byId[a.dataset.spy] = a; });
-    const spied = ['introduction', 'logo', 'color', 'typography', 'tone-voice'];
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting && byId[e.target.id]) {
-          links.forEach((a) => a.classList.remove('active'));
-          byId[e.target.id].classList.add('active');
-        }
-      });
-    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-    spied.forEach((id) => { const el = document.getElementById(id); if (el) observer.observe(el); });
+  <!-- Full-width repeating footer, pinned below the page content -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-wordmark">Tailored Applications</div>
+      <p class="footer-tagline">Made-to-measure software, concept to launch — and a brand built to fit.</p>
+      <ul class="footer-links">
+        <li><a href="#introduction" data-spy="introduction">Introduction</a></li>
+        <li><a href="#logo" data-spy="logo">Logo</a></li>
+        <li><a href="#color" data-spy="color">Color</a></li>
+        <li><a href="#typography" data-spy="typography">Typography</a></li>
+        <li><a href="#tone-voice" data-spy="tone-voice">Tone &amp; Voice</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Tailored Applications. All rights reserved.</p>
+    </div>
+  </footer>
 
+  <script>
+    // Mobile nav drawer
     const btn = document.getElementById('menuBtn');
     const sb = document.getElementById('sidebar');
     const scrim = document.getElementById('scrim');
-    const close = () => { sb.classList.remove('open'); scrim.classList.remove('show'); };
+    const closeNav = () => { sb.classList.remove('open'); scrim.classList.remove('show'); };
     btn?.addEventListener('click', () => { sb.classList.toggle('open'); scrim.classList.toggle('show'); });
-    scrim?.addEventListener('click', close);
-    document.querySelectorAll('.nav a').forEach((a) => a.addEventListener('click', close));
+    scrim?.addEventListener('click', closeNav);
+
+    // ----- Paged navigation: show one section ("page") at a time -----
+    const navLinks = Array.from(document.querySelectorAll('a[data-spy]'));
+    const pages = ['introduction', 'logo', 'color', 'typography', 'tone-voice'];
+    const setPage = (id, push) => {
+      if (pages.indexOf(id) === -1) id = 'introduction';
+      document.querySelectorAll('.section').forEach((s) => s.classList.toggle('is-active', s.id === id));
+      Array.from(document.body.classList).forEach((c) => { if (c.indexOf('page-') === 0) document.body.classList.remove(c); });
+      document.body.classList.add('page-' + id);
+      navLinks.forEach((a) => a.classList.toggle('active', a.dataset.spy === id));
+      if (push) {
+        const url = id === 'introduction' ? (location.pathname + location.search) : ('#' + id);
+        history.pushState({ page: id }, '', url);
+      }
+      window.scrollTo(0, 0);
+    };
+    navLinks.forEach((a) => a.addEventListener('click', (e) => {
+      e.preventDefault();
+      setPage(a.dataset.spy, true);
+      closeNav();
+    }));
+    window.addEventListener('popstate', () => {
+      setPage(location.hash ? location.hash.slice(1) : 'introduction', false);
+    });
+    // Initial page from the URL hash (or Introduction by default)
+    setPage(location.hash ? location.hash.slice(1) : 'introduction', false);
 
     // Theme toggle (segmented Light / Dark control in the sidebar)
     const root = document.documentElement;
@@ -410,7 +424,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
     const applyTheme = (theme) => {
       root.setAttribute('data-theme', theme);
-      if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#090e13' : '#ffffff');
+      if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#191919' : '#ffffff');
       themeOpts.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeValue === theme)));
     };
     applyTheme(root.getAttribute('data-theme') || (mql.matches ? 'dark' : 'light'));
@@ -432,9 +446,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         navigator.clipboard?.writeText(url);
       });
     });
-
-    // On a fresh load without a target anchor, start at the video hero.
-    if (!location.hash) window.scrollTo(0, 0);
   </script>
 </body>
 </html>

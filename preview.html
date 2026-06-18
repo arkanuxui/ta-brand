@@ -18,7 +18,7 @@
       var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', theme);
       var meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', theme === 'dark' ? '#090e13' : '#ffffff');
+      if (meta) meta.setAttribute('content', theme === 'dark' ? '#191919' : '#ffffff');
     } catch (e) {}
   })();
 </script>
@@ -76,15 +76,15 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --bg: #090e13;            /* near-black canvas */
-  --surface: #10161c;       /* raised panel — a gentle step above the canvas */
-  --text: #e7e9ec;          /* primary text */
-  --muted: #9da4ac;         /* secondary text */
-  --faint: #646b75;         /* faint */
-  --line: #1f2730;          /* hairline */
-  --hover: #171e25;         /* hover / checker / badge fill */
-  --soon-bg: #0c1217;       /* coming-soon panel */
-  --coming: #555c66;        /* "coming soon" */
+  --bg: #191919;            /* canvas */
+  --surface: #2b2c2d;       /* raised surface — nav, cards */
+  --text: #ededee;          /* primary text */
+  --muted: #a3a4a5;         /* secondary text */
+  --faint: #6c6d6e;         /* faint */
+  --line: #3a3b3c;          /* hairline */
+  --hover: #343536;         /* hover / checker / badge fill */
+  --soon-bg: #202021;       /* coming-soon panel */
+  --coming: #5a5b5c;        /* "coming soon" */
   --yes: #3fbf83;           /* brighter green for dark */
   --label: #ff5a64;         /* lifted red so labels clear AA on dark surfaces */
   --accent-soft: rgba(239, 51, 64, 0.16);
@@ -638,7 +638,7 @@ a { color: inherit; }
     var mql = window.matchMedia('(prefers-color-scheme: dark)');
     function applyTheme(theme) {
       root.setAttribute('data-theme', theme);
-      if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#090e13' : '#ffffff');
+      if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#191919' : '#ffffff');
       themeOpts.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.themeValue === theme)); });
     }
     applyTheme(root.getAttribute('data-theme') || (mql.matches ? 'dark' : 'light'));

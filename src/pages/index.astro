@@ -34,7 +34,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
         var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', theme === 'dark' ? '#090e13' : '#ffffff');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#191919' : '#ffffff');
       } catch (e) {}
     })();
   </script>
@@ -424,7 +424,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
     const applyTheme = (theme) => {
       root.setAttribute('data-theme', theme);
-      if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#090e13' : '#ffffff');
+      if (themeMeta) themeMeta.setAttribute('content', theme === 'dark' ? '#191919' : '#ffffff');
       themeOpts.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.themeValue === theme)));
     };
     applyTheme(root.getAttribute('data-theme') || (mql.matches ? 'dark' : 'light'));

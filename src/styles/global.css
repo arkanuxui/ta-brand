@@ -306,6 +306,26 @@ a { color: inherit; }
   -webkit-mask: url("/ta-brand/nav/ta-wordmark.svg") no-repeat center / contain;
   mask: url("/ta-brand/nav/ta-wordmark.svg") no-repeat center / contain; }
 
+/* ---------- Color in use — bento collage ---------- */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin: 14px 0; }
+.bento .tile { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r-card); box-shadow: var(--shadow); background: var(--surface); }
+.bento .tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 450ms ease; }
+.bento .tile:hover img { transform: scale(1.04); }
+.bento .sq { grid-column: span 2; aspect-ratio: 1 / 1; }       /* three squares across the top row */
+.bento .wide { grid-column: span 2; aspect-ratio: 3 / 2; }      /* three product tiles across the bottom row */
+/* Gallery variant — uniform 2×2 of 16:9 mockups, same tile styling */
+.bento.gallery { grid-template-columns: repeat(2, 1fr); }
+.bento.gallery .tile { aspect-ratio: 16 / 9; }
+@media (max-width: 1024px) {
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .bento .sq, .bento .wide { grid-column: span 1; }
+  .bento .wide { aspect-ratio: 3 / 2; }
+}
+@media (max-width: 560px) {
+  .bento, .bento.gallery { grid-template-columns: 1fr; }
+  .bento .sq, .bento .wide { grid-column: 1 / -1; }
+}
+
 /* ---------- Type scale ---------- */
 .scale-row { display: flex; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .scale-row .tag { flex: 0 0 90px; font-family: var(--font-mono); color: var(--faint); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }

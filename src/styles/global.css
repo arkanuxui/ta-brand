@@ -205,6 +205,8 @@ a { color: inherit; }
 .logo-sep { height: 1px; background: var(--line); border: 0; margin: 40px 0; }
 .logo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin: 40px 0; }
 .logo-row-text { min-width: 0; }
+/* The mark assets are square — show them in a square frame that fills its column */
+.specimen.square { aspect-ratio: 1 / 1; }
 
 /* Logo page — section group headers (a clear tier above the sub-parts) */
 .logo-part { margin: 52px 0 22px; padding-top: 30px; border-top: 1px solid var(--line); }

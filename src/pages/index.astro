@@ -36,10 +36,41 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         var meta = document.querySelector('meta[name="theme-color"]');
         if (meta) meta.setAttribute('content', theme === 'dark' ? '#191919' : '#ffffff');
       } catch (e) {}
+      // Skip the intro loader if we've already shown it this session (no flash)
+      try { if (sessionStorage.getItem('ta-visited')) document.documentElement.classList.add('loaded'); } catch (e) {}
     })();
   </script>
 </head>
 <body>
+  <!-- Intro loader: drifting brand gradient + counting percentage (once per session) -->
+  <div id="loader" role="status" aria-label="Loading"><span class="loader-pct" id="loaderPct">0%</span></div>
+  <script is:inline>
+    (function () {
+      if (document.documentElement.classList.contains('loaded')) return;
+      var loader = document.getElementById('loader');
+      var pctEl = document.getElementById('loaderPct');
+      if (!loader || !pctEl) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var dur = reduce ? 350 : 2000, start = null, last = -1;
+      function finish() {
+        try { sessionStorage.setItem('ta-visited', '1'); } catch (e) {}
+        document.documentElement.classList.add('loaded');
+        loader.classList.add('done');
+        var done = function () { if (loader && loader.parentNode) loader.parentNode.removeChild(loader); };
+        loader.addEventListener('transitionend', done, { once: true });
+        setTimeout(done, 900);
+      }
+      function tick(t) {
+        if (start === null) start = t;
+        var p = Math.min(1, (t - start) / dur);
+        var eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+        var val = Math.round(eased * 100);
+        if (val !== last) { last = val; pctEl.textContent = val + '%'; }
+        if (p < 1) requestAnimationFrame(tick); else finish();
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
   <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
   <div class="scrim" id="scrim"></div>
 
@@ -288,47 +319,339 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <section class="section" id="color">
         <p class="eyebrow">02 — Color</p>
         <h2 class="section-title">Color <a class="anchor" href="#color" aria-label="Copy link to section">#</a></h2>
-        <p class="lede">The palettes that make up the Tailored Applications brand, with copyable values.</p>
+        <p class="lede">The Tailored Applications color system — the core brand colors, their full tint and shade scales, an extended palette for interfaces, and the brand gradients. Every value is click-to-copy.</p>
 
-        <p class="subhead">Primary colors</p>
-        <div class="grid grid-4">
-          <div class="swatch"><div class="chip" style="background:#ef3340;"></div><div class="meta"><div><div class="name">Red</div><div class="hex">#EF3340</div></div><CopyButton client:visible value="#EF3340" /></div></div>
-          <div class="swatch"><div class="chip" style="background:#101820;"></div><div class="meta"><div><div class="name">Black</div><div class="hex">#101820</div></div><CopyButton client:visible value="#101820" /></div></div>
-          <div class="swatch"><div class="chip" style="background:#f8f1e0;"></div><div class="meta"><div><div class="name">Off-White</div><div class="hex">#F8F1E0</div></div><CopyButton client:visible value="#F8F1E0" /></div></div>
-          <div class="swatch"><div class="chip" style="background:#53565a;"></div><div class="meta"><div><div class="name">Gray</div><div class="hex">#53565A</div></div><CopyButton client:visible value="#53565A" /></div></div>
+        <div class="part">
+          <span class="part-num">Section 1</span>
+          <h3 class="part-title">Core palette</h3>
         </div>
 
-        <p class="subhead">Red color palette</p>
-        <p class="note">Tints/shades of the brand red — values below are placeholder scales to confirm.</p>
+        <p class="subhead">Primary colors</p>
+        <p class="note">The four colors the brand is built on. Each lists HEX, RGB, and CMYK — click to copy the HEX.</p>
         <div class="grid grid-4">
-          <div class="swatch"><div class="chip" style="background:#fde7e8;"></div><div class="meta"><div><div class="name">Red 100</div><div class="hex">#FDE7E8</div></div><CopyButton client:visible value="#FDE7E8" /></div></div>
-          <div class="swatch"><div class="chip" style="background:#ef3340;"></div><div class="meta"><div><div class="name">Red 500</div><div class="hex">#EF3340</div></div><CopyButton client:visible value="#EF3340" /></div></div>
-          <div class="swatch"><div class="chip" style="background:#9e1f29;"></div><div class="meta"><div><div class="name">Red 800</div><div class="hex">#9E1F29</div></div><CopyButton client:visible value="#9E1F29" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#ef3340;"></div><div class="meta"><div><div class="name">Red Thread</div><div class="hex">#EF3340</div><div class="val">RGB 239 51 64</div><div class="val">CMYK 0 79 73 6</div></div><CopyButton client:visible value="#EF3340" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#101820;"></div><div class="meta"><div><div class="name">Ink</div><div class="hex">#101820</div><div class="val">RGB 16 24 32</div><div class="val">CMYK 50 25 0 87</div></div><CopyButton client:visible value="#101820" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#f8f1e0;"></div><div class="meta"><div><div class="name">Muslin</div><div class="hex">#F8F1E0</div><div class="val">RGB 248 241 224</div><div class="val">CMYK 0 3 10 3</div></div><CopyButton client:visible value="#F8F1E0" /></div></div>
+          <div class="swatch"><div class="chip" style="background:#53565a;"></div><div class="meta"><div><div class="name">Flannel</div><div class="hex">#53565A</div><div class="val">RGB 83 86 90</div><div class="val">CMYK 8 4 0 65</div></div><CopyButton client:visible value="#53565A" /></div></div>
+        </div>
+        <p class="note">CMYK values are a standard conversion from RGB.</p>
+
+        <p class="subhead">Red color palette</p>
+        <p class="note">A full scale around Red Thread, fixed at 500 — lighter tints above, deeper shades below — for fills, hovers, borders, and accents.</p>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Red</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#FEF2F2" aria-label="Red 50 #FEF2F2"><span class="tw-sw" style="background:#fef2f2;color:#1a1a1a;">50</span><span class="tw-cap">#FEF2F2</span></button>
+            <button class="tw-chip" type="button" data-copy="#FDE0E2" aria-label="Red 100 #FDE0E2"><span class="tw-sw" style="background:#fde0e2;color:#1a1a1a;">100</span><span class="tw-cap">#FDE0E2</span></button>
+            <button class="tw-chip" type="button" data-copy="#FBC4C8" aria-label="Red 200 #FBC4C8"><span class="tw-sw" style="background:#fbc4c8;color:#1a1a1a;">200</span><span class="tw-cap">#FBC4C8</span></button>
+            <button class="tw-chip" type="button" data-copy="#F7989F" aria-label="Red 300 #F7989F"><span class="tw-sw" style="background:#f7989f;color:#1a1a1a;">300</span><span class="tw-cap">#F7989F</span></button>
+            <button class="tw-chip" type="button" data-copy="#F26571" aria-label="Red 400 #F26571"><span class="tw-sw" style="background:#f26571;color:#ffffff;">400</span><span class="tw-cap">#F26571</span></button>
+            <button class="tw-chip" type="button" data-copy="#EF3340" aria-label="Red 500 #EF3340"><span class="tw-sw" style="background:#ef3340;color:#ffffff;">500</span><span class="tw-cap">#EF3340</span></button>
+            <button class="tw-chip" type="button" data-copy="#D81F2C" aria-label="Red 600 #D81F2C"><span class="tw-sw" style="background:#d81f2c;color:#ffffff;">600</span><span class="tw-cap">#D81F2C</span></button>
+            <button class="tw-chip" type="button" data-copy="#B41722" aria-label="Red 700 #B41722"><span class="tw-sw" style="background:#b41722;color:#ffffff;">700</span><span class="tw-cap">#B41722</span></button>
+            <button class="tw-chip" type="button" data-copy="#8F161F" aria-label="Red 800 #8F161F"><span class="tw-sw" style="background:#8f161f;color:#ffffff;">800</span><span class="tw-cap">#8F161F</span></button>
+            <button class="tw-chip" type="button" data-copy="#6F1419" aria-label="Red 900 #6F1419"><span class="tw-sw" style="background:#6f1419;color:#ffffff;">900</span><span class="tw-cap">#6F1419</span></button>
+          </div>
         </div>
 
         <p class="subhead">Gray color palette</p>
-        <p class="note">Neutral grays around the brand gray — placeholder scale to confirm.</p>
-        <div class="grid grid-4">
-          <div class="swatch"><div class="chip" style="background:#eceae6;"></div><div class="meta"><div><div class="name">Gray 100</div><div class="hex">#ECEAE6</div></div><CopyButton client:visible value="#ECEAE6" /></div></div>
-          <div class="swatch"><div class="chip" style="background:#53565a;"></div><div class="meta"><div><div class="name">Gray 500</div><div class="hex">#53565A</div></div><CopyButton client:visible value="#53565A" /></div></div>
-          <div class="swatch"><div class="chip" style="background:#101820;"></div><div class="meta"><div><div class="name">Gray 900</div><div class="hex">#101820</div></div><CopyButton client:visible value="#101820" /></div></div>
+        <p class="note">Neutral grays anchored on Flannel at 500 and ramping down to Ink at 900 — for text, surfaces, dividers, and disabled states.</p>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Gray</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#F6F6F7" aria-label="Gray 50 #F6F6F7"><span class="tw-sw" style="background:#f6f6f7;color:#1a1a1a;">50</span><span class="tw-cap">#F6F6F7</span></button>
+            <button class="tw-chip" type="button" data-copy="#ECEDED" aria-label="Gray 100 #ECEDED"><span class="tw-sw" style="background:#eceded;color:#1a1a1a;">100</span><span class="tw-cap">#ECEDED</span></button>
+            <button class="tw-chip" type="button" data-copy="#D8D9DA" aria-label="Gray 200 #D8D9DA"><span class="tw-sw" style="background:#d8d9da;color:#1a1a1a;">200</span><span class="tw-cap">#D8D9DA</span></button>
+            <button class="tw-chip" type="button" data-copy="#B6B8BA" aria-label="Gray 300 #B6B8BA"><span class="tw-sw" style="background:#b6b8ba;color:#1a1a1a;">300</span><span class="tw-cap">#B6B8BA</span></button>
+            <button class="tw-chip" type="button" data-copy="#8B8E91" aria-label="Gray 400 #8B8E91"><span class="tw-sw" style="background:#8b8e91;color:#ffffff;">400</span><span class="tw-cap">#8B8E91</span></button>
+            <button class="tw-chip" type="button" data-copy="#53565A" aria-label="Gray 500 #53565A"><span class="tw-sw" style="background:#53565a;color:#ffffff;">500</span><span class="tw-cap">#53565A</span></button>
+            <button class="tw-chip" type="button" data-copy="#44474A" aria-label="Gray 600 #44474A"><span class="tw-sw" style="background:#44474a;color:#ffffff;">600</span><span class="tw-cap">#44474A</span></button>
+            <button class="tw-chip" type="button" data-copy="#36383B" aria-label="Gray 700 #36383B"><span class="tw-sw" style="background:#36383b;color:#ffffff;">700</span><span class="tw-cap">#36383B</span></button>
+            <button class="tw-chip" type="button" data-copy="#23272C" aria-label="Gray 800 #23272C"><span class="tw-sw" style="background:#23272c;color:#ffffff;">800</span><span class="tw-cap">#23272C</span></button>
+            <button class="tw-chip" type="button" data-copy="#101820" aria-label="Gray 900 #101820"><span class="tw-sw" style="background:#101820;color:#ffffff;">900</span><span class="tw-cap">#101820</span></button>
+          </div>
         </div>
 
-        <p class="subhead">Secondary colors</p>
-        <p class="flag">Open question: are there secondary colors beyond the four primaries? Placeholder shown.</p>
-        <div class="grid grid-4">
-          <div class="swatch"><div class="chip" style="background:#c9bea3;"></div><div class="meta"><div><div class="name">Secondary — TBD</div><div class="hex">#C9BEA3</div></div><CopyButton client:visible value="#C9BEA3" /></div></div>
+        <div class="part">
+          <span class="part-num">Section 2</span>
+          <h3 class="part-title">Extended palette</h3>
+        </div>
+
+        <p class="subhead">Supporting colors</p>
+        <p class="note">An extended palette — Orange through Rose, each from 50 to 950 — for interface needs the core four can't cover on their own: badges, tags, charts, and data visualization. Use it as accent, never as identity; Red Thread stays the lead. Click any shade to copy its hex.</p>
+
+        <div class="tw-fam">
+          <div class="tw-fam-name">Orange</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#FFF7ED" aria-label="Orange 50 #FFF7ED"><span class="tw-sw" style="background:#fff7ed;color:#1a1a1a;">50</span><span class="tw-cap">#FFF7ED</span></button>
+            <button class="tw-chip" type="button" data-copy="#FFEDD4" aria-label="Orange 100 #FFEDD4"><span class="tw-sw" style="background:#ffedd4;color:#1a1a1a;">100</span><span class="tw-cap">#FFEDD4</span></button>
+            <button class="tw-chip" type="button" data-copy="#FFD6A7" aria-label="Orange 200 #FFD6A7"><span class="tw-sw" style="background:#ffd6a7;color:#1a1a1a;">200</span><span class="tw-cap">#FFD6A7</span></button>
+            <button class="tw-chip" type="button" data-copy="#FFB86A" aria-label="Orange 300 #FFB86A"><span class="tw-sw" style="background:#ffb86a;color:#1a1a1a;">300</span><span class="tw-cap">#FFB86A</span></button>
+            <button class="tw-chip" type="button" data-copy="#FF8904" aria-label="Orange 400 #FF8904"><span class="tw-sw" style="background:#ff8904;color:#1a1a1a;">400</span><span class="tw-cap">#FF8904</span></button>
+            <button class="tw-chip" type="button" data-copy="#FF6900" aria-label="Orange 500 #FF6900"><span class="tw-sw" style="background:#ff6900;color:#ffffff;">500</span><span class="tw-cap">#FF6900</span></button>
+            <button class="tw-chip" type="button" data-copy="#F54900" aria-label="Orange 600 #F54900"><span class="tw-sw" style="background:#f54900;color:#ffffff;">600</span><span class="tw-cap">#F54900</span></button>
+            <button class="tw-chip" type="button" data-copy="#CA3500" aria-label="Orange 700 #CA3500"><span class="tw-sw" style="background:#ca3500;color:#ffffff;">700</span><span class="tw-cap">#CA3500</span></button>
+            <button class="tw-chip" type="button" data-copy="#9F2D00" aria-label="Orange 800 #9F2D00"><span class="tw-sw" style="background:#9f2d00;color:#ffffff;">800</span><span class="tw-cap">#9F2D00</span></button>
+            <button class="tw-chip" type="button" data-copy="#7E2A0C" aria-label="Orange 900 #7E2A0C"><span class="tw-sw" style="background:#7e2a0c;color:#ffffff;">900</span><span class="tw-cap">#7E2A0C</span></button>
+            <button class="tw-chip" type="button" data-copy="#441306" aria-label="Orange 950 #441306"><span class="tw-sw" style="background:#441306;color:#ffffff;">950</span><span class="tw-cap">#441306</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Amber</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#FFFBEB" aria-label="Amber 50 #FFFBEB"><span class="tw-sw" style="background:#fffbeb;color:#1a1a1a;">50</span><span class="tw-cap">#FFFBEB</span></button>
+            <button class="tw-chip" type="button" data-copy="#FEF3C6" aria-label="Amber 100 #FEF3C6"><span class="tw-sw" style="background:#fef3c6;color:#1a1a1a;">100</span><span class="tw-cap">#FEF3C6</span></button>
+            <button class="tw-chip" type="button" data-copy="#FEE685" aria-label="Amber 200 #FEE685"><span class="tw-sw" style="background:#fee685;color:#1a1a1a;">200</span><span class="tw-cap">#FEE685</span></button>
+            <button class="tw-chip" type="button" data-copy="#FFD230" aria-label="Amber 300 #FFD230"><span class="tw-sw" style="background:#ffd230;color:#1a1a1a;">300</span><span class="tw-cap">#FFD230</span></button>
+            <button class="tw-chip" type="button" data-copy="#FFB900" aria-label="Amber 400 #FFB900"><span class="tw-sw" style="background:#ffb900;color:#1a1a1a;">400</span><span class="tw-cap">#FFB900</span></button>
+            <button class="tw-chip" type="button" data-copy="#FE9A00" aria-label="Amber 500 #FE9A00"><span class="tw-sw" style="background:#fe9a00;color:#1a1a1a;">500</span><span class="tw-cap">#FE9A00</span></button>
+            <button class="tw-chip" type="button" data-copy="#E17100" aria-label="Amber 600 #E17100"><span class="tw-sw" style="background:#e17100;color:#ffffff;">600</span><span class="tw-cap">#E17100</span></button>
+            <button class="tw-chip" type="button" data-copy="#BB4D00" aria-label="Amber 700 #BB4D00"><span class="tw-sw" style="background:#bb4d00;color:#ffffff;">700</span><span class="tw-cap">#BB4D00</span></button>
+            <button class="tw-chip" type="button" data-copy="#973C00" aria-label="Amber 800 #973C00"><span class="tw-sw" style="background:#973c00;color:#ffffff;">800</span><span class="tw-cap">#973C00</span></button>
+            <button class="tw-chip" type="button" data-copy="#7B3306" aria-label="Amber 900 #7B3306"><span class="tw-sw" style="background:#7b3306;color:#ffffff;">900</span><span class="tw-cap">#7B3306</span></button>
+            <button class="tw-chip" type="button" data-copy="#461901" aria-label="Amber 950 #461901"><span class="tw-sw" style="background:#461901;color:#ffffff;">950</span><span class="tw-cap">#461901</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Yellow</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#FEFCE8" aria-label="Yellow 50 #FEFCE8"><span class="tw-sw" style="background:#fefce8;color:#1a1a1a;">50</span><span class="tw-cap">#FEFCE8</span></button>
+            <button class="tw-chip" type="button" data-copy="#FEF9C2" aria-label="Yellow 100 #FEF9C2"><span class="tw-sw" style="background:#fef9c2;color:#1a1a1a;">100</span><span class="tw-cap">#FEF9C2</span></button>
+            <button class="tw-chip" type="button" data-copy="#FFF085" aria-label="Yellow 200 #FFF085"><span class="tw-sw" style="background:#fff085;color:#1a1a1a;">200</span><span class="tw-cap">#FFF085</span></button>
+            <button class="tw-chip" type="button" data-copy="#FFDF20" aria-label="Yellow 300 #FFDF20"><span class="tw-sw" style="background:#ffdf20;color:#1a1a1a;">300</span><span class="tw-cap">#FFDF20</span></button>
+            <button class="tw-chip" type="button" data-copy="#FDC700" aria-label="Yellow 400 #FDC700"><span class="tw-sw" style="background:#fdc700;color:#1a1a1a;">400</span><span class="tw-cap">#FDC700</span></button>
+            <button class="tw-chip" type="button" data-copy="#F0B100" aria-label="Yellow 500 #F0B100"><span class="tw-sw" style="background:#f0b100;color:#1a1a1a;">500</span><span class="tw-cap">#F0B100</span></button>
+            <button class="tw-chip" type="button" data-copy="#D08700" aria-label="Yellow 600 #D08700"><span class="tw-sw" style="background:#d08700;color:#ffffff;">600</span><span class="tw-cap">#D08700</span></button>
+            <button class="tw-chip" type="button" data-copy="#A65F00" aria-label="Yellow 700 #A65F00"><span class="tw-sw" style="background:#a65f00;color:#ffffff;">700</span><span class="tw-cap">#A65F00</span></button>
+            <button class="tw-chip" type="button" data-copy="#894B00" aria-label="Yellow 800 #894B00"><span class="tw-sw" style="background:#894b00;color:#ffffff;">800</span><span class="tw-cap">#894B00</span></button>
+            <button class="tw-chip" type="button" data-copy="#733E0A" aria-label="Yellow 900 #733E0A"><span class="tw-sw" style="background:#733e0a;color:#ffffff;">900</span><span class="tw-cap">#733E0A</span></button>
+            <button class="tw-chip" type="button" data-copy="#432004" aria-label="Yellow 950 #432004"><span class="tw-sw" style="background:#432004;color:#ffffff;">950</span><span class="tw-cap">#432004</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Lime</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#F7FEE7" aria-label="Lime 50 #F7FEE7"><span class="tw-sw" style="background:#f7fee7;color:#1a1a1a;">50</span><span class="tw-cap">#F7FEE7</span></button>
+            <button class="tw-chip" type="button" data-copy="#ECFCCA" aria-label="Lime 100 #ECFCCA"><span class="tw-sw" style="background:#ecfcca;color:#1a1a1a;">100</span><span class="tw-cap">#ECFCCA</span></button>
+            <button class="tw-chip" type="button" data-copy="#D8F999" aria-label="Lime 200 #D8F999"><span class="tw-sw" style="background:#d8f999;color:#1a1a1a;">200</span><span class="tw-cap">#D8F999</span></button>
+            <button class="tw-chip" type="button" data-copy="#BBF451" aria-label="Lime 300 #BBF451"><span class="tw-sw" style="background:#bbf451;color:#1a1a1a;">300</span><span class="tw-cap">#BBF451</span></button>
+            <button class="tw-chip" type="button" data-copy="#9AE600" aria-label="Lime 400 #9AE600"><span class="tw-sw" style="background:#9ae600;color:#1a1a1a;">400</span><span class="tw-cap">#9AE600</span></button>
+            <button class="tw-chip" type="button" data-copy="#7CCF00" aria-label="Lime 500 #7CCF00"><span class="tw-sw" style="background:#7ccf00;color:#1a1a1a;">500</span><span class="tw-cap">#7CCF00</span></button>
+            <button class="tw-chip" type="button" data-copy="#5EA500" aria-label="Lime 600 #5EA500"><span class="tw-sw" style="background:#5ea500;color:#ffffff;">600</span><span class="tw-cap">#5EA500</span></button>
+            <button class="tw-chip" type="button" data-copy="#497D00" aria-label="Lime 700 #497D00"><span class="tw-sw" style="background:#497d00;color:#ffffff;">700</span><span class="tw-cap">#497D00</span></button>
+            <button class="tw-chip" type="button" data-copy="#3C6300" aria-label="Lime 800 #3C6300"><span class="tw-sw" style="background:#3c6300;color:#ffffff;">800</span><span class="tw-cap">#3C6300</span></button>
+            <button class="tw-chip" type="button" data-copy="#35530E" aria-label="Lime 900 #35530E"><span class="tw-sw" style="background:#35530e;color:#ffffff;">900</span><span class="tw-cap">#35530E</span></button>
+            <button class="tw-chip" type="button" data-copy="#192E03" aria-label="Lime 950 #192E03"><span class="tw-sw" style="background:#192e03;color:#ffffff;">950</span><span class="tw-cap">#192E03</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Green</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#F0FDF4" aria-label="Green 50 #F0FDF4"><span class="tw-sw" style="background:#f0fdf4;color:#1a1a1a;">50</span><span class="tw-cap">#F0FDF4</span></button>
+            <button class="tw-chip" type="button" data-copy="#DCFCE7" aria-label="Green 100 #DCFCE7"><span class="tw-sw" style="background:#dcfce7;color:#1a1a1a;">100</span><span class="tw-cap">#DCFCE7</span></button>
+            <button class="tw-chip" type="button" data-copy="#B9F8CF" aria-label="Green 200 #B9F8CF"><span class="tw-sw" style="background:#b9f8cf;color:#1a1a1a;">200</span><span class="tw-cap">#B9F8CF</span></button>
+            <button class="tw-chip" type="button" data-copy="#7BF1A8" aria-label="Green 300 #7BF1A8"><span class="tw-sw" style="background:#7bf1a8;color:#1a1a1a;">300</span><span class="tw-cap">#7BF1A8</span></button>
+            <button class="tw-chip" type="button" data-copy="#05DF72" aria-label="Green 400 #05DF72"><span class="tw-sw" style="background:#05df72;color:#ffffff;">400</span><span class="tw-cap">#05DF72</span></button>
+            <button class="tw-chip" type="button" data-copy="#00C950" aria-label="Green 500 #00C950"><span class="tw-sw" style="background:#00c950;color:#ffffff;">500</span><span class="tw-cap">#00C950</span></button>
+            <button class="tw-chip" type="button" data-copy="#00A63E" aria-label="Green 600 #00A63E"><span class="tw-sw" style="background:#00a63e;color:#ffffff;">600</span><span class="tw-cap">#00A63E</span></button>
+            <button class="tw-chip" type="button" data-copy="#008236" aria-label="Green 700 #008236"><span class="tw-sw" style="background:#008236;color:#ffffff;">700</span><span class="tw-cap">#008236</span></button>
+            <button class="tw-chip" type="button" data-copy="#016630" aria-label="Green 800 #016630"><span class="tw-sw" style="background:#016630;color:#ffffff;">800</span><span class="tw-cap">#016630</span></button>
+            <button class="tw-chip" type="button" data-copy="#0D542B" aria-label="Green 900 #0D542B"><span class="tw-sw" style="background:#0d542b;color:#ffffff;">900</span><span class="tw-cap">#0D542B</span></button>
+            <button class="tw-chip" type="button" data-copy="#032E15" aria-label="Green 950 #032E15"><span class="tw-sw" style="background:#032e15;color:#ffffff;">950</span><span class="tw-cap">#032E15</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Emerald</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#ECFDF5" aria-label="Emerald 50 #ECFDF5"><span class="tw-sw" style="background:#ecfdf5;color:#1a1a1a;">50</span><span class="tw-cap">#ECFDF5</span></button>
+            <button class="tw-chip" type="button" data-copy="#D0FAE5" aria-label="Emerald 100 #D0FAE5"><span class="tw-sw" style="background:#d0fae5;color:#1a1a1a;">100</span><span class="tw-cap">#D0FAE5</span></button>
+            <button class="tw-chip" type="button" data-copy="#A4F4CF" aria-label="Emerald 200 #A4F4CF"><span class="tw-sw" style="background:#a4f4cf;color:#1a1a1a;">200</span><span class="tw-cap">#A4F4CF</span></button>
+            <button class="tw-chip" type="button" data-copy="#5EE9B5" aria-label="Emerald 300 #5EE9B5"><span class="tw-sw" style="background:#5ee9b5;color:#1a1a1a;">300</span><span class="tw-cap">#5EE9B5</span></button>
+            <button class="tw-chip" type="button" data-copy="#00D492" aria-label="Emerald 400 #00D492"><span class="tw-sw" style="background:#00d492;color:#ffffff;">400</span><span class="tw-cap">#00D492</span></button>
+            <button class="tw-chip" type="button" data-copy="#00BC7D" aria-label="Emerald 500 #00BC7D"><span class="tw-sw" style="background:#00bc7d;color:#ffffff;">500</span><span class="tw-cap">#00BC7D</span></button>
+            <button class="tw-chip" type="button" data-copy="#009966" aria-label="Emerald 600 #009966"><span class="tw-sw" style="background:#009966;color:#ffffff;">600</span><span class="tw-cap">#009966</span></button>
+            <button class="tw-chip" type="button" data-copy="#007A55" aria-label="Emerald 700 #007A55"><span class="tw-sw" style="background:#007a55;color:#ffffff;">700</span><span class="tw-cap">#007A55</span></button>
+            <button class="tw-chip" type="button" data-copy="#006045" aria-label="Emerald 800 #006045"><span class="tw-sw" style="background:#006045;color:#ffffff;">800</span><span class="tw-cap">#006045</span></button>
+            <button class="tw-chip" type="button" data-copy="#004F3B" aria-label="Emerald 900 #004F3B"><span class="tw-sw" style="background:#004f3b;color:#ffffff;">900</span><span class="tw-cap">#004F3B</span></button>
+            <button class="tw-chip" type="button" data-copy="#002C22" aria-label="Emerald 950 #002C22"><span class="tw-sw" style="background:#002c22;color:#ffffff;">950</span><span class="tw-cap">#002C22</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Teal</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#F0FDFA" aria-label="Teal 50 #F0FDFA"><span class="tw-sw" style="background:#f0fdfa;color:#1a1a1a;">50</span><span class="tw-cap">#F0FDFA</span></button>
+            <button class="tw-chip" type="button" data-copy="#CBFBF1" aria-label="Teal 100 #CBFBF1"><span class="tw-sw" style="background:#cbfbf1;color:#1a1a1a;">100</span><span class="tw-cap">#CBFBF1</span></button>
+            <button class="tw-chip" type="button" data-copy="#96F7E4" aria-label="Teal 200 #96F7E4"><span class="tw-sw" style="background:#96f7e4;color:#1a1a1a;">200</span><span class="tw-cap">#96F7E4</span></button>
+            <button class="tw-chip" type="button" data-copy="#46ECD5" aria-label="Teal 300 #46ECD5"><span class="tw-sw" style="background:#46ecd5;color:#1a1a1a;">300</span><span class="tw-cap">#46ECD5</span></button>
+            <button class="tw-chip" type="button" data-copy="#00D5BE" aria-label="Teal 400 #00D5BE"><span class="tw-sw" style="background:#00d5be;color:#ffffff;">400</span><span class="tw-cap">#00D5BE</span></button>
+            <button class="tw-chip" type="button" data-copy="#00BBA7" aria-label="Teal 500 #00BBA7"><span class="tw-sw" style="background:#00bba7;color:#ffffff;">500</span><span class="tw-cap">#00BBA7</span></button>
+            <button class="tw-chip" type="button" data-copy="#009689" aria-label="Teal 600 #009689"><span class="tw-sw" style="background:#009689;color:#ffffff;">600</span><span class="tw-cap">#009689</span></button>
+            <button class="tw-chip" type="button" data-copy="#00786F" aria-label="Teal 700 #00786F"><span class="tw-sw" style="background:#00786f;color:#ffffff;">700</span><span class="tw-cap">#00786F</span></button>
+            <button class="tw-chip" type="button" data-copy="#005F5A" aria-label="Teal 800 #005F5A"><span class="tw-sw" style="background:#005f5a;color:#ffffff;">800</span><span class="tw-cap">#005F5A</span></button>
+            <button class="tw-chip" type="button" data-copy="#0B4F4A" aria-label="Teal 900 #0B4F4A"><span class="tw-sw" style="background:#0b4f4a;color:#ffffff;">900</span><span class="tw-cap">#0B4F4A</span></button>
+            <button class="tw-chip" type="button" data-copy="#022F2E" aria-label="Teal 950 #022F2E"><span class="tw-sw" style="background:#022f2e;color:#ffffff;">950</span><span class="tw-cap">#022F2E</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Cyan</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#ECFEFF" aria-label="Cyan 50 #ECFEFF"><span class="tw-sw" style="background:#ecfeff;color:#1a1a1a;">50</span><span class="tw-cap">#ECFEFF</span></button>
+            <button class="tw-chip" type="button" data-copy="#CEFAFE" aria-label="Cyan 100 #CEFAFE"><span class="tw-sw" style="background:#cefafe;color:#1a1a1a;">100</span><span class="tw-cap">#CEFAFE</span></button>
+            <button class="tw-chip" type="button" data-copy="#A2F4FD" aria-label="Cyan 200 #A2F4FD"><span class="tw-sw" style="background:#a2f4fd;color:#1a1a1a;">200</span><span class="tw-cap">#A2F4FD</span></button>
+            <button class="tw-chip" type="button" data-copy="#53EAFD" aria-label="Cyan 300 #53EAFD"><span class="tw-sw" style="background:#53eafd;color:#1a1a1a;">300</span><span class="tw-cap">#53EAFD</span></button>
+            <button class="tw-chip" type="button" data-copy="#00D3F2" aria-label="Cyan 400 #00D3F2"><span class="tw-sw" style="background:#00d3f2;color:#1a1a1a;">400</span><span class="tw-cap">#00D3F2</span></button>
+            <button class="tw-chip" type="button" data-copy="#00B8DB" aria-label="Cyan 500 #00B8DB"><span class="tw-sw" style="background:#00b8db;color:#ffffff;">500</span><span class="tw-cap">#00B8DB</span></button>
+            <button class="tw-chip" type="button" data-copy="#0092B8" aria-label="Cyan 600 #0092B8"><span class="tw-sw" style="background:#0092b8;color:#ffffff;">600</span><span class="tw-cap">#0092B8</span></button>
+            <button class="tw-chip" type="button" data-copy="#007595" aria-label="Cyan 700 #007595"><span class="tw-sw" style="background:#007595;color:#ffffff;">700</span><span class="tw-cap">#007595</span></button>
+            <button class="tw-chip" type="button" data-copy="#005F78" aria-label="Cyan 800 #005F78"><span class="tw-sw" style="background:#005f78;color:#ffffff;">800</span><span class="tw-cap">#005F78</span></button>
+            <button class="tw-chip" type="button" data-copy="#104E64" aria-label="Cyan 900 #104E64"><span class="tw-sw" style="background:#104e64;color:#ffffff;">900</span><span class="tw-cap">#104E64</span></button>
+            <button class="tw-chip" type="button" data-copy="#053345" aria-label="Cyan 950 #053345"><span class="tw-sw" style="background:#053345;color:#ffffff;">950</span><span class="tw-cap">#053345</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Sky</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#F0F9FF" aria-label="Sky 50 #F0F9FF"><span class="tw-sw" style="background:#f0f9ff;color:#1a1a1a;">50</span><span class="tw-cap">#F0F9FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#DFF2FE" aria-label="Sky 100 #DFF2FE"><span class="tw-sw" style="background:#dff2fe;color:#1a1a1a;">100</span><span class="tw-cap">#DFF2FE</span></button>
+            <button class="tw-chip" type="button" data-copy="#B8E6FE" aria-label="Sky 200 #B8E6FE"><span class="tw-sw" style="background:#b8e6fe;color:#1a1a1a;">200</span><span class="tw-cap">#B8E6FE</span></button>
+            <button class="tw-chip" type="button" data-copy="#74D4FF" aria-label="Sky 300 #74D4FF"><span class="tw-sw" style="background:#74d4ff;color:#1a1a1a;">300</span><span class="tw-cap">#74D4FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#00BCFF" aria-label="Sky 400 #00BCFF"><span class="tw-sw" style="background:#00bcff;color:#ffffff;">400</span><span class="tw-cap">#00BCFF</span></button>
+            <button class="tw-chip" type="button" data-copy="#00A6F4" aria-label="Sky 500 #00A6F4"><span class="tw-sw" style="background:#00a6f4;color:#ffffff;">500</span><span class="tw-cap">#00A6F4</span></button>
+            <button class="tw-chip" type="button" data-copy="#0084D1" aria-label="Sky 600 #0084D1"><span class="tw-sw" style="background:#0084d1;color:#ffffff;">600</span><span class="tw-cap">#0084D1</span></button>
+            <button class="tw-chip" type="button" data-copy="#0069A8" aria-label="Sky 700 #0069A8"><span class="tw-sw" style="background:#0069a8;color:#ffffff;">700</span><span class="tw-cap">#0069A8</span></button>
+            <button class="tw-chip" type="button" data-copy="#00598A" aria-label="Sky 800 #00598A"><span class="tw-sw" style="background:#00598a;color:#ffffff;">800</span><span class="tw-cap">#00598A</span></button>
+            <button class="tw-chip" type="button" data-copy="#024A70" aria-label="Sky 900 #024A70"><span class="tw-sw" style="background:#024a70;color:#ffffff;">900</span><span class="tw-cap">#024A70</span></button>
+            <button class="tw-chip" type="button" data-copy="#052F4A" aria-label="Sky 950 #052F4A"><span class="tw-sw" style="background:#052f4a;color:#ffffff;">950</span><span class="tw-cap">#052F4A</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Blue</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#EFF6FF" aria-label="Blue 50 #EFF6FF"><span class="tw-sw" style="background:#eff6ff;color:#1a1a1a;">50</span><span class="tw-cap">#EFF6FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#DBEAFE" aria-label="Blue 100 #DBEAFE"><span class="tw-sw" style="background:#dbeafe;color:#1a1a1a;">100</span><span class="tw-cap">#DBEAFE</span></button>
+            <button class="tw-chip" type="button" data-copy="#BEDBFF" aria-label="Blue 200 #BEDBFF"><span class="tw-sw" style="background:#bedbff;color:#1a1a1a;">200</span><span class="tw-cap">#BEDBFF</span></button>
+            <button class="tw-chip" type="button" data-copy="#8EC5FF" aria-label="Blue 300 #8EC5FF"><span class="tw-sw" style="background:#8ec5ff;color:#1a1a1a;">300</span><span class="tw-cap">#8EC5FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#51A2FF" aria-label="Blue 400 #51A2FF"><span class="tw-sw" style="background:#51a2ff;color:#ffffff;">400</span><span class="tw-cap">#51A2FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#2B7FFF" aria-label="Blue 500 #2B7FFF"><span class="tw-sw" style="background:#2b7fff;color:#ffffff;">500</span><span class="tw-cap">#2B7FFF</span></button>
+            <button class="tw-chip" type="button" data-copy="#155DFC" aria-label="Blue 600 #155DFC"><span class="tw-sw" style="background:#155dfc;color:#ffffff;">600</span><span class="tw-cap">#155DFC</span></button>
+            <button class="tw-chip" type="button" data-copy="#1447E6" aria-label="Blue 700 #1447E6"><span class="tw-sw" style="background:#1447e6;color:#ffffff;">700</span><span class="tw-cap">#1447E6</span></button>
+            <button class="tw-chip" type="button" data-copy="#193CB8" aria-label="Blue 800 #193CB8"><span class="tw-sw" style="background:#193cb8;color:#ffffff;">800</span><span class="tw-cap">#193CB8</span></button>
+            <button class="tw-chip" type="button" data-copy="#1C398E" aria-label="Blue 900 #1C398E"><span class="tw-sw" style="background:#1c398e;color:#ffffff;">900</span><span class="tw-cap">#1C398E</span></button>
+            <button class="tw-chip" type="button" data-copy="#162456" aria-label="Blue 950 #162456"><span class="tw-sw" style="background:#162456;color:#ffffff;">950</span><span class="tw-cap">#162456</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Indigo</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#EEF2FF" aria-label="Indigo 50 #EEF2FF"><span class="tw-sw" style="background:#eef2ff;color:#1a1a1a;">50</span><span class="tw-cap">#EEF2FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#E0E7FF" aria-label="Indigo 100 #E0E7FF"><span class="tw-sw" style="background:#e0e7ff;color:#1a1a1a;">100</span><span class="tw-cap">#E0E7FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#C6D2FF" aria-label="Indigo 200 #C6D2FF"><span class="tw-sw" style="background:#c6d2ff;color:#1a1a1a;">200</span><span class="tw-cap">#C6D2FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#A3B3FF" aria-label="Indigo 300 #A3B3FF"><span class="tw-sw" style="background:#a3b3ff;color:#1a1a1a;">300</span><span class="tw-cap">#A3B3FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#7C86FF" aria-label="Indigo 400 #7C86FF"><span class="tw-sw" style="background:#7c86ff;color:#ffffff;">400</span><span class="tw-cap">#7C86FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#615FFF" aria-label="Indigo 500 #615FFF"><span class="tw-sw" style="background:#615fff;color:#ffffff;">500</span><span class="tw-cap">#615FFF</span></button>
+            <button class="tw-chip" type="button" data-copy="#4F39F6" aria-label="Indigo 600 #4F39F6"><span class="tw-sw" style="background:#4f39f6;color:#ffffff;">600</span><span class="tw-cap">#4F39F6</span></button>
+            <button class="tw-chip" type="button" data-copy="#432DD7" aria-label="Indigo 700 #432DD7"><span class="tw-sw" style="background:#432dd7;color:#ffffff;">700</span><span class="tw-cap">#432DD7</span></button>
+            <button class="tw-chip" type="button" data-copy="#372AAC" aria-label="Indigo 800 #372AAC"><span class="tw-sw" style="background:#372aac;color:#ffffff;">800</span><span class="tw-cap">#372AAC</span></button>
+            <button class="tw-chip" type="button" data-copy="#312C85" aria-label="Indigo 900 #312C85"><span class="tw-sw" style="background:#312c85;color:#ffffff;">900</span><span class="tw-cap">#312C85</span></button>
+            <button class="tw-chip" type="button" data-copy="#1E1A4D" aria-label="Indigo 950 #1E1A4D"><span class="tw-sw" style="background:#1e1a4d;color:#ffffff;">950</span><span class="tw-cap">#1E1A4D</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Violet</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#F5F3FF" aria-label="Violet 50 #F5F3FF"><span class="tw-sw" style="background:#f5f3ff;color:#1a1a1a;">50</span><span class="tw-cap">#F5F3FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#EDE9FE" aria-label="Violet 100 #EDE9FE"><span class="tw-sw" style="background:#ede9fe;color:#1a1a1a;">100</span><span class="tw-cap">#EDE9FE</span></button>
+            <button class="tw-chip" type="button" data-copy="#DDD6FF" aria-label="Violet 200 #DDD6FF"><span class="tw-sw" style="background:#ddd6ff;color:#1a1a1a;">200</span><span class="tw-cap">#DDD6FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#C4B4FF" aria-label="Violet 300 #C4B4FF"><span class="tw-sw" style="background:#c4b4ff;color:#1a1a1a;">300</span><span class="tw-cap">#C4B4FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#A684FF" aria-label="Violet 400 #A684FF"><span class="tw-sw" style="background:#a684ff;color:#1a1a1a;">400</span><span class="tw-cap">#A684FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#8E51FF" aria-label="Violet 500 #8E51FF"><span class="tw-sw" style="background:#8e51ff;color:#ffffff;">500</span><span class="tw-cap">#8E51FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#7F22FE" aria-label="Violet 600 #7F22FE"><span class="tw-sw" style="background:#7f22fe;color:#ffffff;">600</span><span class="tw-cap">#7F22FE</span></button>
+            <button class="tw-chip" type="button" data-copy="#7008E7" aria-label="Violet 700 #7008E7"><span class="tw-sw" style="background:#7008e7;color:#ffffff;">700</span><span class="tw-cap">#7008E7</span></button>
+            <button class="tw-chip" type="button" data-copy="#5D0EC0" aria-label="Violet 800 #5D0EC0"><span class="tw-sw" style="background:#5d0ec0;color:#ffffff;">800</span><span class="tw-cap">#5D0EC0</span></button>
+            <button class="tw-chip" type="button" data-copy="#4D179A" aria-label="Violet 900 #4D179A"><span class="tw-sw" style="background:#4d179a;color:#ffffff;">900</span><span class="tw-cap">#4D179A</span></button>
+            <button class="tw-chip" type="button" data-copy="#2F0D68" aria-label="Violet 950 #2F0D68"><span class="tw-sw" style="background:#2f0d68;color:#ffffff;">950</span><span class="tw-cap">#2F0D68</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Purple</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#FAF5FF" aria-label="Purple 50 #FAF5FF"><span class="tw-sw" style="background:#faf5ff;color:#1a1a1a;">50</span><span class="tw-cap">#FAF5FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#F3E8FF" aria-label="Purple 100 #F3E8FF"><span class="tw-sw" style="background:#f3e8ff;color:#1a1a1a;">100</span><span class="tw-cap">#F3E8FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#E9D4FF" aria-label="Purple 200 #E9D4FF"><span class="tw-sw" style="background:#e9d4ff;color:#1a1a1a;">200</span><span class="tw-cap">#E9D4FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#DAB2FF" aria-label="Purple 300 #DAB2FF"><span class="tw-sw" style="background:#dab2ff;color:#1a1a1a;">300</span><span class="tw-cap">#DAB2FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#C27AFF" aria-label="Purple 400 #C27AFF"><span class="tw-sw" style="background:#c27aff;color:#1a1a1a;">400</span><span class="tw-cap">#C27AFF</span></button>
+            <button class="tw-chip" type="button" data-copy="#AD46FF" aria-label="Purple 500 #AD46FF"><span class="tw-sw" style="background:#ad46ff;color:#ffffff;">500</span><span class="tw-cap">#AD46FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#9810FA" aria-label="Purple 600 #9810FA"><span class="tw-sw" style="background:#9810fa;color:#ffffff;">600</span><span class="tw-cap">#9810FA</span></button>
+            <button class="tw-chip" type="button" data-copy="#8200DB" aria-label="Purple 700 #8200DB"><span class="tw-sw" style="background:#8200db;color:#ffffff;">700</span><span class="tw-cap">#8200DB</span></button>
+            <button class="tw-chip" type="button" data-copy="#6E11B0" aria-label="Purple 800 #6E11B0"><span class="tw-sw" style="background:#6e11b0;color:#ffffff;">800</span><span class="tw-cap">#6E11B0</span></button>
+            <button class="tw-chip" type="button" data-copy="#59168B" aria-label="Purple 900 #59168B"><span class="tw-sw" style="background:#59168b;color:#ffffff;">900</span><span class="tw-cap">#59168B</span></button>
+            <button class="tw-chip" type="button" data-copy="#3C0366" aria-label="Purple 950 #3C0366"><span class="tw-sw" style="background:#3c0366;color:#ffffff;">950</span><span class="tw-cap">#3C0366</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Fuchsia</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#FDF4FF" aria-label="Fuchsia 50 #FDF4FF"><span class="tw-sw" style="background:#fdf4ff;color:#1a1a1a;">50</span><span class="tw-cap">#FDF4FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#FAE8FF" aria-label="Fuchsia 100 #FAE8FF"><span class="tw-sw" style="background:#fae8ff;color:#1a1a1a;">100</span><span class="tw-cap">#FAE8FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#F6CFFF" aria-label="Fuchsia 200 #F6CFFF"><span class="tw-sw" style="background:#f6cfff;color:#1a1a1a;">200</span><span class="tw-cap">#F6CFFF</span></button>
+            <button class="tw-chip" type="button" data-copy="#F4A8FF" aria-label="Fuchsia 300 #F4A8FF"><span class="tw-sw" style="background:#f4a8ff;color:#1a1a1a;">300</span><span class="tw-cap">#F4A8FF</span></button>
+            <button class="tw-chip" type="button" data-copy="#ED6AFF" aria-label="Fuchsia 400 #ED6AFF"><span class="tw-sw" style="background:#ed6aff;color:#1a1a1a;">400</span><span class="tw-cap">#ED6AFF</span></button>
+            <button class="tw-chip" type="button" data-copy="#E12AFB" aria-label="Fuchsia 500 #E12AFB"><span class="tw-sw" style="background:#e12afb;color:#ffffff;">500</span><span class="tw-cap">#E12AFB</span></button>
+            <button class="tw-chip" type="button" data-copy="#C800DE" aria-label="Fuchsia 600 #C800DE"><span class="tw-sw" style="background:#c800de;color:#ffffff;">600</span><span class="tw-cap">#C800DE</span></button>
+            <button class="tw-chip" type="button" data-copy="#A800B7" aria-label="Fuchsia 700 #A800B7"><span class="tw-sw" style="background:#a800b7;color:#ffffff;">700</span><span class="tw-cap">#A800B7</span></button>
+            <button class="tw-chip" type="button" data-copy="#8A0194" aria-label="Fuchsia 800 #8A0194"><span class="tw-sw" style="background:#8a0194;color:#ffffff;">800</span><span class="tw-cap">#8A0194</span></button>
+            <button class="tw-chip" type="button" data-copy="#721378" aria-label="Fuchsia 900 #721378"><span class="tw-sw" style="background:#721378;color:#ffffff;">900</span><span class="tw-cap">#721378</span></button>
+            <button class="tw-chip" type="button" data-copy="#4B004F" aria-label="Fuchsia 950 #4B004F"><span class="tw-sw" style="background:#4b004f;color:#ffffff;">950</span><span class="tw-cap">#4B004F</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Pink</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#FDF2F8" aria-label="Pink 50 #FDF2F8"><span class="tw-sw" style="background:#fdf2f8;color:#1a1a1a;">50</span><span class="tw-cap">#FDF2F8</span></button>
+            <button class="tw-chip" type="button" data-copy="#FCE7F3" aria-label="Pink 100 #FCE7F3"><span class="tw-sw" style="background:#fce7f3;color:#1a1a1a;">100</span><span class="tw-cap">#FCE7F3</span></button>
+            <button class="tw-chip" type="button" data-copy="#FCCEE8" aria-label="Pink 200 #FCCEE8"><span class="tw-sw" style="background:#fccee8;color:#1a1a1a;">200</span><span class="tw-cap">#FCCEE8</span></button>
+            <button class="tw-chip" type="button" data-copy="#FDA5D5" aria-label="Pink 300 #FDA5D5"><span class="tw-sw" style="background:#fda5d5;color:#1a1a1a;">300</span><span class="tw-cap">#FDA5D5</span></button>
+            <button class="tw-chip" type="button" data-copy="#FB64B6" aria-label="Pink 400 #FB64B6"><span class="tw-sw" style="background:#fb64b6;color:#1a1a1a;">400</span><span class="tw-cap">#FB64B6</span></button>
+            <button class="tw-chip" type="button" data-copy="#F6339A" aria-label="Pink 500 #F6339A"><span class="tw-sw" style="background:#f6339a;color:#ffffff;">500</span><span class="tw-cap">#F6339A</span></button>
+            <button class="tw-chip" type="button" data-copy="#E60076" aria-label="Pink 600 #E60076"><span class="tw-sw" style="background:#e60076;color:#ffffff;">600</span><span class="tw-cap">#E60076</span></button>
+            <button class="tw-chip" type="button" data-copy="#C6005C" aria-label="Pink 700 #C6005C"><span class="tw-sw" style="background:#c6005c;color:#ffffff;">700</span><span class="tw-cap">#C6005C</span></button>
+            <button class="tw-chip" type="button" data-copy="#A3004C" aria-label="Pink 800 #A3004C"><span class="tw-sw" style="background:#a3004c;color:#ffffff;">800</span><span class="tw-cap">#A3004C</span></button>
+            <button class="tw-chip" type="button" data-copy="#861043" aria-label="Pink 900 #861043"><span class="tw-sw" style="background:#861043;color:#ffffff;">900</span><span class="tw-cap">#861043</span></button>
+            <button class="tw-chip" type="button" data-copy="#510424" aria-label="Pink 950 #510424"><span class="tw-sw" style="background:#510424;color:#ffffff;">950</span><span class="tw-cap">#510424</span></button>
+          </div>
+        </div>
+        <div class="tw-fam">
+          <div class="tw-fam-name">Rose</div>
+          <div class="tw-scale">
+            <button class="tw-chip" type="button" data-copy="#FFF1F2" aria-label="Rose 50 #FFF1F2"><span class="tw-sw" style="background:#fff1f2;color:#1a1a1a;">50</span><span class="tw-cap">#FFF1F2</span></button>
+            <button class="tw-chip" type="button" data-copy="#FFE4E6" aria-label="Rose 100 #FFE4E6"><span class="tw-sw" style="background:#ffe4e6;color:#1a1a1a;">100</span><span class="tw-cap">#FFE4E6</span></button>
+            <button class="tw-chip" type="button" data-copy="#FFCCD3" aria-label="Rose 200 #FFCCD3"><span class="tw-sw" style="background:#ffccd3;color:#1a1a1a;">200</span><span class="tw-cap">#FFCCD3</span></button>
+            <button class="tw-chip" type="button" data-copy="#FFA1AD" aria-label="Rose 300 #FFA1AD"><span class="tw-sw" style="background:#ffa1ad;color:#1a1a1a;">300</span><span class="tw-cap">#FFA1AD</span></button>
+            <button class="tw-chip" type="button" data-copy="#FF637E" aria-label="Rose 400 #FF637E"><span class="tw-sw" style="background:#ff637e;color:#ffffff;">400</span><span class="tw-cap">#FF637E</span></button>
+            <button class="tw-chip" type="button" data-copy="#FF2056" aria-label="Rose 500 #FF2056"><span class="tw-sw" style="background:#ff2056;color:#ffffff;">500</span><span class="tw-cap">#FF2056</span></button>
+            <button class="tw-chip" type="button" data-copy="#EC003F" aria-label="Rose 600 #EC003F"><span class="tw-sw" style="background:#ec003f;color:#ffffff;">600</span><span class="tw-cap">#EC003F</span></button>
+            <button class="tw-chip" type="button" data-copy="#C70036" aria-label="Rose 700 #C70036"><span class="tw-sw" style="background:#c70036;color:#ffffff;">700</span><span class="tw-cap">#C70036</span></button>
+            <button class="tw-chip" type="button" data-copy="#A50036" aria-label="Rose 800 #A50036"><span class="tw-sw" style="background:#a50036;color:#ffffff;">800</span><span class="tw-cap">#A50036</span></button>
+            <button class="tw-chip" type="button" data-copy="#8B0836" aria-label="Rose 900 #8B0836"><span class="tw-sw" style="background:#8b0836;color:#ffffff;">900</span><span class="tw-cap">#8B0836</span></button>
+            <button class="tw-chip" type="button" data-copy="#4D0218" aria-label="Rose 950 #4D0218"><span class="tw-sw" style="background:#4d0218;color:#ffffff;">950</span><span class="tw-cap">#4D0218</span></button>
+          </div>
+        </div>
+
+        <div class="part">
+          <span class="part-num">Section 3</span>
+          <h3 class="part-title">Gradients &amp; use</h3>
         </div>
 
         <p class="subhead">Gradients</p>
-        <p class="note">Placeholder — confirm if the brand uses gradients.</p>
-        <div class="grid grid-2">
-          <div class="card"><div class="specimen" style="background:linear-gradient(120deg,#ef3340,#101820);color:#fff;">Gradient A</div></div>
-          <div class="card"><div class="specimen" style="background:linear-gradient(120deg,#f8f1e0,#ef3340);color:#101820;">Gradient B</div></div>
+        <p class="note">Dark, saturated brand fields made to carry the <strong>white wordmark</strong> — the one variation cleared for red and dark backgrounds. Each keeps its stops within a single hue family and blends in OKLab, so the transition stays smooth and clean — never muddy.</p>
+        <div class="grid grid-3">
+          <div class="card"><div class="specimen" style="background:linear-gradient(135deg in oklab,#ef3340,#8f161f);"><span class="grad-logo" role="img" aria-label="White wordmark on the Crimson gradient"></span></div><div class="card-label">Crimson · #EF3340 → #8F161F</div></div>
+          <div class="card"><div class="specimen" style="background:linear-gradient(135deg in oklab,#b41722,#2a0c10);"><span class="grad-logo" role="img" aria-label="White wordmark on the Deep Crimson gradient"></span></div><div class="card-label">Deep Crimson · #B41722 → #2A0C10</div></div>
+          <div class="card"><div class="specimen" style="background:linear-gradient(135deg in oklab,#2b313a,#101820);"><span class="grad-logo" role="img" aria-label="White wordmark on the Graphite gradient"></span></div><div class="card-label">Graphite · #2B313A → #101820</div></div>
         </div>
 
         <p class="subhead">Color in use</p>
-        <p class="note">Mockups showing how the colors are applied.</p>
+        <p class="note">How the palette comes together across real surfaces — mockups landing as the brand rolls out.</p>
         <div class="grid grid-3">
           <div class="card"><div class="specimen">Mockup</div></div>
           <div class="card"><div class="specimen">Mockup</div></div>
@@ -342,11 +665,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <h2 class="section-title">Typography <a class="anchor" href="#typography" aria-label="Copy link to section">#</a></h2>
         <p class="lede">The IBM Plex super-family — one family carrying the brand across roles and languages.</p>
 
-        <p class="subhead">Section 1 — Why this family</p>
+        <div class="part">
+          <span class="part-num">Section 1</span>
+          <h3 class="part-title">Why this family</h3>
+        </div>
         <p class="note">Restraint is the point: a single super-family keeps marketing, product, and documentation visibly related, while the mono cut gives engineering its own honest voice.</p>
         <div class="card card-pad"><div style="font-family:var(--font-display);font-weight:700;font-size:44px;letter-spacing:-0.02em;">Aa Bb Cc 0123</div><div style="color:var(--muted);margin-top:8px;">IBM Plex Sans</div></div>
 
-        <p class="subhead">Section 2 — Four roles, one family</p>
+        <div class="part">
+          <span class="part-num">Section 2</span>
+          <h3 class="part-title">Four roles, one family</h3>
+        </div>
         <div class="grid grid-4">
           <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Display &amp; Headings</div><div style="font-weight:700;font-size:30px;letter-spacing:-0.02em;">Aa</div><div style="font-weight:600;margin-top:6px;">IBM Plex Sans · Bold / SemiBold</div><small style="color:var(--muted)">Hero statements, page titles, section heads.</small></div>
           <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Text &amp; UI</div><div style="font-weight:400;font-size:30px;">Aa</div><div style="font-weight:600;margin-top:6px;">IBM Plex Sans · Regular / Medium</div><small style="color:var(--muted)">Body copy, interface labels, buttons.</small></div>
@@ -354,7 +683,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Arabic &amp; Kurdish</div><div class="arabic" style="font-size:30px;font-weight:700;">تطبيقات</div><div style="font-weight:600;margin-top:6px;">IBM Plex Sans Arabic</div><small style="color:var(--muted)">Same family, RTL. Central Kurdish (Sorani).</small></div>
         </div>
 
-        <p class="subhead">Section 3 — Type scale</p>
+        <div class="part">
+          <span class="part-num">Section 3</span>
+          <h3 class="part-title">Type scale</h3>
+        </div>
         <div class="card card-pad">
           <div class="scale-row"><span class="tag">Display</span><span class="demo" style="font-size:44px;">Tailored</span></div>
           <div class="scale-row"><span class="tag">Heading</span><span class="demo" style="font-size:30px;">Tailored</span></div>
@@ -362,7 +694,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <div class="scale-row" style="border-bottom:0;"><span class="tag">Mono</span><span class="demo mono" style="font-size:15px;font-weight:400;">v1.0.0 · spec</span></div>
         </div>
 
-        <p class="subhead">Section 4 — Bilingual system</p>
+        <div class="part">
+          <span class="part-num">Section 4</span>
+          <h3 class="part-title">Bilingual system</h3>
+        </div>
         <p class="note">English (Latin) and Central Kurdish / Arabic (RTL) in the same Plex family — verify shaping on live strings before sign-off.</p>
         <div class="grid grid-2">
           <div class="card card-pad"><div class="label" style="margin-bottom:6px;">English</div><div style="font-size:26px;font-weight:700;">Tailored Applications</div></div>
@@ -381,11 +716,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <h2 class="section-title">Tone &amp; Voice <a class="anchor" href="#tone-voice" aria-label="Copy link to section">#</a></h2>
         <p class="lede">How Tailored Applications sounds — confident, plain-spoken, and built to fit.</p>
 
+        <div class="part">
+          <span class="part-num">Section 1</span>
+          <h3 class="part-title">Personality</h3>
+        </div>
+
         <p class="subhead">Brand personality</p>
         <div class="grid grid-3">
           <div class="card card-pad"><strong>Attribute one</strong><div style="color:var(--muted)">placeholder</div></div>
           <div class="card card-pad"><strong>Attribute two</strong><div style="color:var(--muted)">placeholder</div></div>
           <div class="card card-pad"><strong>Attribute three</strong><div style="color:var(--muted)">placeholder</div></div>
+        </div>
+
+        <div class="part">
+          <span class="part-num">Section 2</span>
+          <h3 class="part-title">Voice</h3>
         </div>
 
         <p class="subhead">Writing principles</p>
@@ -395,6 +740,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <div class="tnt">
           <div class="card card-pad yes"><div class="tnt-head">On-brand</div>Software that actually fits your business.</div>
           <div class="card card-pad no"><div class="tnt-head">Off-brand</div>A synergistic, best-in-class enterprise solution.</div>
+        </div>
+
+        <div class="part">
+          <span class="part-num">Section 3</span>
+          <h3 class="part-title">Words &amp; examples</h3>
         </div>
 
         <p class="subhead">Words we use / avoid</p>
@@ -515,6 +865,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         const url = location.origin + location.pathname + a.getAttribute('href');
         navigator.clipboard?.writeText(url);
       });
+    });
+
+    // Click-to-copy for the full Tailwind palette chips
+    document.addEventListener('click', (e) => {
+      const chip = e.target.closest('.tw-chip[data-copy]');
+      if (!chip) return;
+      navigator.clipboard?.writeText(chip.dataset.copy);
+      const cap = chip.querySelector('.tw-cap');
+      const prev = cap ? cap.textContent : null;
+      chip.classList.add('copied');
+      if (cap) cap.textContent = 'Copied';
+      setTimeout(() => { chip.classList.remove('copied'); if (cap) cap.textContent = prev; }, 1000);
     });
   </script>
 </body>

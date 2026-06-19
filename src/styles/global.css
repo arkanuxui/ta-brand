@@ -69,6 +69,34 @@
 
 * { box-sizing: border-box; }
 
+/* ---------- Intro loader ---------- */
+#loader {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
+  background: var(--bg); overflow: hidden; transition: opacity 600ms ease;
+}
+#loader::before {
+  content: ""; position: absolute; inset: -40%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(55vw 52vw at 26% 30%, rgba(239, 51, 64, 0.42) 0%, rgba(239, 51, 64, 0.18) 40%, rgba(239, 51, 64, 0) 78%),
+    radial-gradient(58vw 54vw at 76% 72%, rgba(239, 51, 64, 0.26) 0%, rgba(239, 51, 64, 0.10) 42%, rgba(239, 51, 64, 0) 80%);
+  filter: blur(60px);
+  animation: loader-drift 9s ease-in-out infinite alternate;
+}
+.loader-pct {
+  position: relative; z-index: 1;
+  font-family: var(--font-mono); font-weight: 400; letter-spacing: -0.03em;
+  font-size: clamp(72px, 18vw, 200px); line-height: 1; color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+#loader.done { opacity: 0; pointer-events: none; }
+html.loaded #loader { display: none; }
+/* Lock page scroll while the intro loader is up so its scrollbar doesn't show */
+html:not(.loaded) { overflow: hidden; }
+@keyframes loader-drift {
+  0%   { transform: translate3d(-5%, -3%, 0) scale(1.05); }
+  100% { transform: translate3d(5%, 4%, 0) scale(1.18); }
+}
+
 html { scroll-behavior: smooth; scroll-padding-top: 32px; }
 
 body {
@@ -83,12 +111,20 @@ body {
   transition: background-color 200ms ease, color 200ms ease;
 }
 
-/* glass test — ambient brand glow behind everything so the nav blur reads */
+/* glass test — ambient brand glow behind everything so the nav blur reads.
+   Animated via transform only (GPU-composited) so it's free of repaint cost. */
 body::before {
-  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  content: ""; position: fixed; inset: -30%; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(48vw 48vw at 7% 12%, rgba(239, 51, 64, 0.34), transparent 62%),
-    radial-gradient(48vw 48vw at 92% 88%, rgba(239, 51, 64, 0.20), transparent 62%);
+    radial-gradient(65vw 60vw at 4% 8%, rgba(239, 51, 64, 0.30) 0%, rgba(239, 51, 64, 0.14) 38%, rgba(239, 51, 64, 0) 78%),
+    radial-gradient(65vw 60vw at 96% 92%, rgba(239, 51, 64, 0.18) 0%, rgba(239, 51, 64, 0.08) 40%, rgba(239, 51, 64, 0) 80%);
+  filter: blur(60px);
+  will-change: transform;
+  animation: bg-drift 24s ease-in-out infinite alternate;
+}
+@keyframes bg-drift {
+  0%   { transform: translate3d(-3%, -2%, 0) scale(1.04); }
+  100% { transform: translate3d(3%, 3%, 0) scale(1.12); }
 }
 
 a { color: inherit; }
@@ -222,11 +258,11 @@ a { color: inherit; }
 /* The mark assets are square — show them in a square frame that fills its column */
 .specimen.square { aspect-ratio: 1 / 1; }
 
-/* Logo page — section group headers (a clear tier above the sub-parts) */
-.logo-part { margin: 52px 0 22px; padding-top: 30px; border-top: 1px solid var(--line); }
-.logo-part:first-of-type { margin-top: 6px; padding-top: 0; border-top: 0; }
-.logo-part-num { display: block; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--label); font-size: 12px; font-weight: 500; margin-bottom: 8px; }
-.logo-part-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 3vw, 28px); letter-spacing: -0.02em; color: var(--text); margin: 0; }
+/* Section group headers (a clear tier above the sub-parts) — used across all pages */
+.logo-part, .part { margin: 52px 0 22px; padding-top: 30px; border-top: 1px solid var(--line); }
+.logo-part:first-of-type, .part:first-of-type { margin-top: 6px; padding-top: 0; border-top: 0; }
+.logo-part-num, .part-num { display: block; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--label); font-size: 12px; font-weight: 500; margin-bottom: 8px; }
+.logo-part-title, .part-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 3vw, 28px); letter-spacing: -0.02em; color: var(--text); margin: 0; }
 
 /* Combination-logo misuse demos (real logo distorted via CSS, on white) */
 .specimen.misuse { position: relative; background: #fff; padding: 13% 16%; }
@@ -248,9 +284,27 @@ a { color: inherit; }
 .swatch .meta { padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; background: var(--surface); }
 .swatch .name { font-weight: 600; font-size: 14px; color: var(--text); }
 .swatch .hex { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.swatch .val { font-family: var(--font-mono); font-size: 11px; color: var(--faint); margin-top: 2px; }
+.swatch .meta { align-items: flex-start; }
 .copy-btn { font-family: var(--font-mono); border: 1px solid var(--line); background: var(--surface); color: var(--muted); border-radius: 8px; font-size: 11px; font-weight: 500; padding: 5px 9px; cursor: pointer; transition: all 120ms ease; }
 .copy-btn:hover { color: var(--text); border-color: var(--faint); }
 .copy-btn.copied { color: var(--label); border-color: var(--label); }
+
+/* ---------- Full Tailwind palette (orange → rose, 50–950) ---------- */
+.tw-fam { margin: 0 0 18px; }
+.tw-fam-name { font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text); margin: 0 0 6px; }
+.tw-scale { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(62px, 1fr); gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+.tw-chip { display: flex; flex-direction: column; padding: 0; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; cursor: pointer; background: var(--surface); font: inherit; text-align: left; transition: box-shadow 120ms ease, transform 120ms ease; }
+.tw-chip:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.10); }
+.tw-chip:active { transform: scale(0.97); }
+.tw-sw { height: 52px; display: flex; align-items: flex-start; justify-content: flex-end; padding: 5px 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; }
+.tw-cap { font-family: var(--font-mono); font-size: 9px; color: var(--muted); padding: 4px 5px; border-top: 1px solid var(--line); white-space: nowrap; transition: color 120ms ease; }
+.tw-chip.copied .tw-cap { color: var(--label); }
+
+/* ---------- Gradient specimens (logo legibility on dark fields) ---------- */
+.grad-logo { display: block; width: 56%; aspect-ratio: 1850.75 / 500; background-color: #fff;
+  -webkit-mask: url("/ta-brand/nav/ta-wordmark.svg") no-repeat center / contain;
+  mask: url("/ta-brand/nav/ta-wordmark.svg") no-repeat center / contain; }
 
 /* ---------- Type scale ---------- */
 .scale-row { display: flex; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
@@ -323,6 +377,6 @@ a { color: inherit; }
   .tnt, .grid-2, .logo-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 540px) { .grid-3, .grid-4 { grid-template-columns: 1fr; } }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } #loader::before, body::before { animation: none !important; } }
 
 :focus-visible { outline: 2px solid var(--red); outline-offset: 2px; border-radius: 6px; }

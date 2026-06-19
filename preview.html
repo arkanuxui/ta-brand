@@ -182,13 +182,20 @@ a { color: inherit; }
 
 /* ---------- Full-width page footer ---------- */
 .site-footer { border-top: 1px solid var(--line); margin-top: 48px; }
-.footer-inner { max-width: 1520px; margin: 0 auto; padding: 26px var(--gap); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 18px 40px; }
-.footer-wordmark { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; font-size: 18px; color: var(--text); }
-.footer-tagline { margin: 6px 0 0; color: var(--muted); font-size: 14px; max-width: 48ch; }
+.footer-inner { max-width: 1520px; margin: 0 auto; padding: 36px var(--gap); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px 40px; }
+.footer-logo-img { display: block; height: 116px; width: auto; }
+.footer-logo-dark { display: none; }
+[data-theme="dark"] .footer-logo-light { display: none; }
+[data-theme="dark"] .footer-logo-dark { display: block; }
+.footer-tagline { margin: 14px 0 0; color: var(--muted); font-size: 14px; max-width: 48ch; }
 .footer-meta { display: flex; flex-direction: column; gap: 12px; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 18px; margin: 0; padding: 0; list-style: none; }
 .footer-links a { text-decoration: none; color: var(--text); font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; transition: color 120ms ease; }
 .footer-links a:hover { color: var(--label); }
+.footer-social { gap: 12px; }
+.footer-social a { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: var(--r-pill); border: 1px solid var(--line); color: var(--text); transition: color 120ms ease, border-color 120ms ease; }
+.footer-social a:hover { color: var(--label); border-color: var(--label); }
+.footer-social svg { width: 18px; height: 18px; display: block; }
 .footer-copy { margin: 0; color: var(--faint); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; }
 @media (min-width: 720px) { .footer-meta { align-items: flex-end; text-align: right; } }
 
@@ -690,13 +697,19 @@ a { color: inherit; }
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="footer-wordmark">Tailored Applications</div>
-      <p class="footer-tagline">Made-to-measure software, concept to launch — and a brand built to fit.</p>
+      <div class="footer-logo">
+        <img class="footer-logo-img footer-logo-light" src="public/footer/footer-logo-light.svg" alt="Tailored Applications" />
+        <img class="footer-logo-img footer-logo-dark" src="public/footer/footer-logo-dark.svg" alt="" aria-hidden="true" />
+      </div>
     </div>
     <div class="footer-meta">
       <ul class="footer-links footer-social">
-        <li><a href="https://tailored-apps.io" target="_blank" rel="noopener">tailored-apps.io</a></li>
-        <li><a href="https://www.linkedin.com/company/tailored-applications/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://tailored-apps.io" target="_blank" rel="noopener" aria-label="Website">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
+        </a></li>
+        <li><a href="https://www.linkedin.com/company/tailored-applications/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.25 8h4.5v14H.25V8zm7.5 0h4.3v1.9h.06c.6-1.1 2.07-2.26 4.26-2.26 4.56 0 5.4 3 5.4 6.9V22h-4.5v-6.5c0-1.55-.03-3.55-2.16-3.55-2.16 0-2.5 1.69-2.5 3.44V22h-4.5V8z"/></svg>
+        </a></li>
       </ul>
       <p class="footer-copy">© 2026 Tailored Applications. All rights reserved.</p>
     </div>

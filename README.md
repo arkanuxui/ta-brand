@@ -31,10 +31,6 @@ npm run preview  # serve the built site
 
 > The site is configured with `base: '/ta-brand'` (project page), so the dev/preview URL includes `/ta-brand`.
 
-### Quick look (no install)
-
-Open **`preview.html`** in a browser — a self-contained static snapshot of the same layout, kept in sync with the real site.
-
 ## Deployment
 
 Pushing to `main` triggers a GitHub Actions workflow (`.github/workflows/deploy.yml`, using `withastro/action` + `actions/deploy-pages`) that builds and publishes to GitHub Pages automatically. No manual steps.
@@ -52,7 +48,6 @@ public/
   logo/                    Logo assets (section-1, section-2-1..4, section-3).
   mark/                    The standalone mark and its applications.
   nav/                     ta-wordmark.svg — the nav logo (used as a CSS mask).
-preview.html               Self-contained static snapshot (no build needed).
 astro.config.mjs           Astro config (React integration, site + base).
 ```
 
@@ -64,5 +59,4 @@ Photographic assets (mockups, in-context shots) are optimized JPEGs (≤1600px);
 
 ## Conventions
 - Colors, type, and spacing live as tokens in `:root` of `global.css` — never hard-code ad-hoc values.
-- Keep `preview.html` in sync with `index.astro` / `global.css` when changing markup or styles.
 - Quality floor: WCAG AA contrast, visible keyboard focus, `prefers-reduced-motion` respected.

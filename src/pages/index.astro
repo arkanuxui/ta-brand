@@ -672,44 +672,130 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <span class="part-num">Section 1</span>
           <h3 class="part-title">Why this family</h3>
         </div>
-        <p class="note">Restraint is the point: a single super-family keeps marketing, product, and documentation visibly related, while the mono cut gives engineering its own honest voice.</p>
-        <div class="card card-pad"><div style="font-family:var(--font-display);font-weight:700;font-size:44px;letter-spacing:-0.02em;">Aa Bb Cc 0123</div><div style="color:var(--muted);margin-top:8px;">IBM Plex Sans</div></div>
+        <p class="note">We use one type family for everything: <strong>IBM Plex</strong>. It's a free, open-source family made by IBM, with matching styles for regular text, for code, and for Arabic script.</p>
+        <p class="note">It fits us because it feels both technical and human — clean and precise, but still friendly. Using one family everywhere keeps the whole brand looking like it belongs together, from a business card to a product screen.</p>
+
+        <div class="card card-pad typeface">
+          <div class="type-hero">
+            <div class="type-hero-glyph">Aa</div>
+            <div class="type-hero-info">
+              <div class="label">IBM Plex Sans</div>
+              <p>The main typeface — for display, headings, body copy, and interface text.</p>
+            </div>
+          </div>
+          <div class="glyphset">
+            <div class="glyph-row">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+            <div class="glyph-row">abcdefghijklmnopqrstuvwxyz</div>
+            <div class="glyph-row muted">0123456789 &amp; . , : ; ! ? — ( ) “ ” @ # % *</div>
+          </div>
+        </div>
+
+        <div class="card card-pad typeface">
+          <div class="type-hero">
+            <div class="type-hero-glyph mono">Aa</div>
+            <div class="type-hero-info">
+              <div class="label">IBM Plex Mono</div>
+              <p>For code, data, version tags, and the brand's signature eyebrows and labels.</p>
+            </div>
+          </div>
+          <div class="glyphset">
+            <div class="glyph-row mono">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+            <div class="glyph-row mono">abcdefghijklmnopqrstuvwxyz</div>
+            <div class="glyph-row mono muted">0123456789 &amp; . , : ; ! ? — ( ) &lt;/&gt; @ # % *</div>
+          </div>
+        </div>
+
+        <div class="card card-pad typeface">
+          <div class="type-hero">
+            <div class="type-hero-glyph arabic">اب</div>
+            <div class="type-hero-info">
+              <div class="label">IBM Plex Sans Arabic</div>
+              <p>The same family for Central Kurdish &amp; Arabic (RTL), so both scripts read as one system with English.</p>
+            </div>
+          </div>
+          <div class="glyphset">
+            <div class="glyph-row arabic">ا ب ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ف ق ك ل م ن ه و ي</div>
+            <div class="glyph-row arabic">پ چ ژ ڤ گ ک ڕ ڵ ۆ ێ ە ھ ی</div>
+            <div class="glyph-row arabic muted">٠ ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩ — 0123456789</div>
+          </div>
+        </div>
 
         <div class="part">
           <span class="part-num">Section 2</span>
           <h3 class="part-title">Four roles, one family</h3>
         </div>
-        <div class="grid grid-4">
-          <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Display &amp; Headings</div><div style="font-weight:700;font-size:30px;letter-spacing:-0.02em;">Aa</div><div style="font-weight:600;margin-top:6px;">IBM Plex Sans · Bold / SemiBold</div><small style="color:var(--muted)">Hero statements, page titles, section heads.</small></div>
-          <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Text &amp; UI</div><div style="font-weight:400;font-size:30px;">Aa</div><div style="font-weight:600;margin-top:6px;">IBM Plex Sans · Regular / Medium</div><small style="color:var(--muted)">Body copy, interface labels, buttons.</small></div>
-          <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Code &amp; Data</div><div class="mono" style="font-size:30px;">Aa</div><div style="font-weight:600;margin-top:6px;">IBM Plex Mono · Regular / Medium</div><small style="color:var(--muted)">Snippets, specs, version tags, eyebrows.</small></div>
-          <div class="card card-pad"><div class="label" style="margin-bottom:8px;">Arabic &amp; Kurdish</div><div class="arabic" style="font-size:30px;font-weight:700;">تطبيقات</div><div style="font-weight:600;margin-top:6px;">IBM Plex Sans Arabic</div><small style="color:var(--muted)">Same family, RTL. Central Kurdish (Sorani).</small></div>
+        <p class="note">Four jobs, one family. Everything is IBM Plex — only the cut and weight change with the role, so the brand always looks related.</p>
+        <div class="grid grid-2 roles">
+          <div class="card card-pad role">
+            <div class="label">Display &amp; Headings</div>
+            <div class="role-specimen" style="font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,40px);letter-spacing:-0.02em;line-height:1.05;">Built to fit.</div>
+            <div class="role-foot">
+              <div class="role-meta">IBM Plex Sans · Bold / SemiBold</div>
+              <p class="role-use">Hero statements, page titles, section heads.</p>
+            </div>
+          </div>
+
+          <div class="card card-pad role">
+            <div class="label">Text &amp; UI</div>
+            <div class="role-specimen" style="font-size:17px;line-height:1.55;">Software tailored to your industry, designed for growth and built to fit.</div>
+            <div class="role-foot">
+              <div class="role-meta">IBM Plex Sans · Regular / Medium</div>
+              <p class="role-use">Body copy, interface labels, buttons.</p>
+            </div>
+          </div>
+
+          <div class="card card-pad role">
+            <div class="label">Code &amp; Data</div>
+            <div class="role-specimen mono" style="font-size:14px;line-height:1.7;"><span style="color:var(--muted);">// build</span><br>release: v1.0.0<br>status: 200 OK</div>
+            <div class="role-foot">
+              <div class="role-meta">IBM Plex Mono · Regular / Medium</div>
+              <p class="role-use">Code, specs, version tags, eyebrows.</p>
+            </div>
+          </div>
+
+          <div class="card card-pad role">
+            <div class="label">Arabic &amp; Kurdish</div>
+            <div class="role-specimen arabic" style="font-weight:700;font-size:clamp(24px,3.6vw,34px);line-height:1.5;">نەرمەکاڵایەک کە تایبەت بەتۆیە</div>
+            <div class="role-foot">
+              <div class="role-meta">IBM Plex Sans Arabic</div>
+              <p class="role-use">Central Kurdish &amp; Arabic, right-to-left.</p>
+            </div>
+          </div>
         </div>
 
         <div class="part">
           <span class="part-num">Section 3</span>
           <h3 class="part-title">Type scale</h3>
         </div>
+        <p class="note">Draft scale for review — sizes are reference values in px; in product they scale responsively. Each role renders live below.</p>
         <div class="card card-pad">
-          <div class="scale-row"><span class="tag">Display</span><span class="demo" style="font-size:44px;">Tailored</span></div>
-          <div class="scale-row"><span class="tag">Heading</span><span class="demo" style="font-size:30px;">Tailored</span></div>
-          <div class="scale-row"><span class="tag">Body</span><span class="demo" style="font-size:18px;font-weight:400;">Tailored Applications</span></div>
-          <div class="scale-row" style="border-bottom:0;"><span class="tag">Mono</span><span class="demo mono" style="font-size:15px;font-weight:400;">v1.0.0 · spec</span></div>
+          <div class="scale-row"><span class="demo" style="font-size:60px;line-height:64px;font-weight:700;">Tailored</span><span class="scale-meta"><b>Display</b><span class="spec">60 / 64 · Bold</span><span class="use">Hero statements</span></span></div>
+          <div class="scale-row"><span class="demo" style="font-size:46px;line-height:48px;font-weight:700;">Tailored</span><span class="scale-meta"><b>H1</b><span class="spec">46 / 48 · Bold</span><span class="use">Page titles</span></span></div>
+          <div class="scale-row"><span class="demo" style="font-size:36px;line-height:40px;font-weight:700;">Tailored Applications</span><span class="scale-meta"><b>H2</b><span class="spec">36 / 40 · Bold</span><span class="use">Section heads</span></span></div>
+          <div class="scale-row"><span class="demo" style="font-size:28px;line-height:34px;font-weight:600;">Tailored Applications</span><span class="scale-meta"><b>H3</b><span class="spec">28 / 34 · SemiBold</span><span class="use">Subsection heads</span></span></div>
+          <div class="scale-row"><span class="demo" style="font-size:22px;line-height:28px;font-weight:600;">Tailored Applications</span><span class="scale-meta"><b>H4</b><span class="spec">22 / 28 · SemiBold</span><span class="use">Card &amp; block titles</span></span></div>
+          <div class="scale-row"><span class="demo" style="font-size:18px;line-height:28px;font-weight:400;">Made-to-measure software, concept to launch.</span><span class="scale-meta"><b>Body Large</b><span class="spec">18 / 28 · Regular</span><span class="use">Lead paragraphs</span></span></div>
+          <div class="scale-row"><span class="demo" style="font-size:16px;line-height:26px;font-weight:400;">Made-to-measure software, concept to launch.</span><span class="scale-meta"><b>Body</b><span class="spec">16 / 26 · Regular</span><span class="use">Default body text</span></span></div>
+          <div class="scale-row"><span class="demo" style="font-size:14px;line-height:20px;font-weight:400;">Made-to-measure software, concept to launch.</span><span class="scale-meta"><b>Small</b><span class="spec">14 / 20 · Regular</span><span class="use">Captions, helper text</span></span></div>
+          <div class="scale-row"><span class="demo" style="font-family:var(--font-mono);font-size:12px;line-height:16px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;">Eyebrow · Label · v1.0.0</span><span class="scale-meta"><b>Caption</b><span class="spec">12 / 16 · Mono Medium</span><span class="use">Eyebrows, labels, tags</span></span></div>
         </div>
 
         <div class="part">
           <span class="part-num">Section 4</span>
           <h3 class="part-title">Bilingual system</h3>
         </div>
-        <p class="note">English (Latin) and Central Kurdish / Arabic (RTL) in the same Plex family — verify shaping on live strings before sign-off.</p>
+        <p class="note">One family across two scripts. English sets in Latin, left-aligned (LTR); Central Kurdish and Arabic set in IBM Plex Sans Arabic, right-aligned (RTL). Mirror the alignment and keep weight and rhythm consistent across both.</p>
         <div class="grid grid-2">
-          <div class="card card-pad"><div class="label" style="margin-bottom:6px;">English</div><div style="font-size:26px;font-weight:700;">Tailored Applications</div></div>
-          <div class="card card-pad"><div class="label" style="margin-bottom:6px;">کوردی / عربي</div><div class="arabic" style="font-size:26px;font-weight:700;">تطبیقات تەرخانکراو</div></div>
-        </div>
-
-        <div class="download">
-          <span class="dl-icon">↓</span>
-          <span class="dl-text"><strong>Download Font Families</strong><small>IBM Plex Sans · Mono · Sans Arabic</small></span>
+          <div class="card card-pad">
+            <div class="label" style="margin-bottom:10px;">English · LTR</div>
+            <div style="font-size:24px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;">Software tailored to your industry.</div>
+            <p style="margin:12px 0 0;color:var(--muted);">Designed for growth. Delivered without the cost of guesswork.</p>
+          </div>
+          <div class="card card-pad">
+            <div class="label" style="margin-bottom:10px;">Central Kurdish · RTL</div>
+            <div class="arabic" style="font-size:24px;font-weight:700;line-height:1.4;">نەرمەکاڵایەک کە تایبەت بۆ تۆ دروستکراوە.</div>
+            <p class="arabic" style="margin:12px 0 0;color:var(--muted);">بۆ گەشەسەندنی تۆ دیزاین کراوە. کە بە وردی کاری لەسەرکراوە.</p>
+          </div>
         </div>
       </section>
 

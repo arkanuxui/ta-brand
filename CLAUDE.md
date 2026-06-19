@@ -18,7 +18,6 @@ A static **brand-guidelines microsite** for the company "Tailored Applications".
 - `src/pages/index.astro` — the whole page; all section markup + a small client `<script>`.
 - `src/components/CopyButton.jsx` — React island for click-to-copy on color swatches (`client:visible`).
 - `src/styles/global.css` — **design tokens in `:root`** + all layout/styles. The brand look is driven from here.
-- `preview.html` — self-contained static snapshot (no build), for quick looks.
 - `docs/requirements.md` — full requirements doc; **source of truth** for scope and decisions.
 
 ## Design direction (follow for ALL UI work)

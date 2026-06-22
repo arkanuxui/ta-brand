@@ -373,6 +373,72 @@ a { color: inherit; }
 .role-foot .role-meta { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: 0.02em; }
 .role-foot .role-use { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
 
+/* ---------- Tone & voice — brand personality ---------- */
+.traits { display: grid; grid-template-columns: repeat(auto-fit, minmax(186px, 1fr)); gap: 16px; margin: 14px 0; }
+.personality .p-num { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; color: var(--label); }
+.personality .p-name { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; color: var(--text); margin: 6px 0 0; }
+.personality .p-desc { margin: 8px 0 0; color: var(--muted); }
+
+/* ---------- Tone & voice — voice principles ---------- */
+.principle .pr-num { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; color: var(--label); }
+.principle .pr-title { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; color: var(--text); margin: 6px 0 14px; }
+.pr-rule { display: flex; gap: 10px; margin: 0 0 8px; color: var(--text); }
+.pr-mark { flex: 0 0 auto; font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.7; }
+.pr-mark.do { color: var(--yes); }
+.pr-mark.dont { color: var(--label); }
+.pr-ex { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); display: grid; gap: 8px; }
+.pr-ex-no, .pr-ex-yes { display: flex; gap: 10px; margin: 0; font-size: 14px; line-height: 1.45; }
+.pr-ex-no { color: var(--muted); }
+.pr-ex-yes { color: var(--text); }
+.pr-ex-no span, .pr-ex-yes span { flex: 0 0 auto; font-weight: 700; }
+.pr-ex-no span { color: var(--label); }
+.pr-ex-yes span { color: var(--yes); }
+
+/* ---------- Tone & voice — tone spectrum ---------- */
+.spectrum { margin: 16px 0; }
+.spectrum-bar { height: 10px; border-radius: var(--r-pill); background: linear-gradient(90deg, #b6b8ba, #f7989f 55%, var(--red)); }
+.spectrum-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 16px; }
+.sp-col { padding-top: 14px; border-top: 2px solid var(--line); }
+.sp-ctx { font-weight: 700; font-size: 15px; color: var(--text); }
+.sp-tone { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: 0.02em; }
+.spectrum-ends { display: flex; justify-content: space-between; margin-top: 14px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); }
+@media (max-width: 640px) { .spectrum-grid { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- Tone & voice — vocabulary ---------- */
+.vocab-head { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+.vocab-head.use { color: var(--yes); }
+.vocab-head.avoid { color: var(--label); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span { font-size: 14px; padding: 6px 12px; border-radius: var(--r-pill); border: 1px solid var(--line); }
+.chip-use { color: var(--text); background: color-mix(in srgb, var(--yes) 12%, transparent); border-color: color-mix(in srgb, var(--yes) 30%, transparent); }
+.chip-avoid { color: var(--muted); background: color-mix(in srgb, var(--red) 8%, transparent); border-color: color-mix(in srgb, var(--red) 24%, transparent); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--red) 60%, transparent); }
+
+/* ---------- Tone & voice — mechanics ---------- */
+.mech .label { display: block; margin-bottom: 8px; }
+.mech p { margin: 0; color: var(--muted); }
+.mech-ex { margin-top: 12px; display: grid; gap: 6px; }
+
+/* ---------- Tone & voice — before & after ---------- */
+.ba .label { display: block; margin-bottom: 14px; }
+.ba-row { display: flex; gap: 12px; }
+.ba-row + .ba-row { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.ba-tag { flex: 0 0 52px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding-top: 2px; }
+.ba-row.before .ba-tag { color: var(--faint); }
+.ba-row.after .ba-tag { color: var(--yes); }
+.ba-row p { margin: 0; }
+.ba-row.before p { color: var(--muted); }
+.ba-row.after p { color: var(--text); font-weight: 500; }
+
+/* ---------- Tone & voice — boilerplate one-liner ---------- */
+.oneliner p { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(20px, 3vw, 28px); letter-spacing: -0.02em; line-height: 1.25; color: var(--text); }
+
+/* ---------- Tone & voice — guardrails do/don't ---------- */
+.gr-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; }
+.gr-list li { display: flex; gap: 10px; color: var(--text); }
+.gr-list li::before { flex: 0 0 auto; font-weight: 700; }
+.gr-list.do li::before { content: "✓"; color: var(--yes); }
+.gr-list.dont li::before { content: "✗"; color: var(--label); }
+
 /* ---------- Tone & voice "this / that" ---------- */
 .tnt { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .tnt .card-pad { min-height: 80px; color: var(--text); }

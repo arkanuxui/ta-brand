@@ -3,3 +3,6 @@ dist/
 .astro/
 .DS_Store
 *.log
+
+# Large brand-pack zip (exceeds GitHub 100MB limit — host externally)
+public/TA-Brand-Guideline-by-Design-Dept-2025.zip

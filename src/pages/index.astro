@@ -102,10 +102,12 @@ const siteUrl = (import.meta.env.SITE || 'https://arkanuxui.github.io') + base;
   <div class="app">
     <!-- ===== Sidebar ===== -->
     <aside class="sidebar" id="sidebar">
-      <button class="nav-close" id="navClose" type="button" aria-label="Close navigation">✕</button>
-      <a class="wordmark" href="#introduction" data-spy="introduction" aria-label="Tailored Applications">
-        <span class="wordmark-logo" role="img" aria-label="Tailored Applications"></span>
-      </a>
+      <div class="sidebar-head">
+        <a class="wordmark" href="#introduction" data-spy="introduction" aria-label="Tailored Applications">
+          <span class="wordmark-logo" role="img" aria-label="Tailored Applications"></span>
+        </a>
+        <button class="nav-close" id="navClose" type="button" aria-label="Close navigation">✕</button>
+      </div>
       <hr class="divider" />
       <ul class="nav">
         <li><a href="#introduction" data-spy="introduction">Introduction</a></li>

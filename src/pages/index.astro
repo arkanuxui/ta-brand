@@ -5,6 +5,8 @@ import CopyButton from '../components/CopyButton.jsx';
 // Normalize the base (Astro's BASE_URL has no trailing slash) so asset
 // paths join cleanly regardless of how `base` is configured.
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// Absolute origin + base, for canonical and social-share (OG/Twitter) URLs.
+const siteUrl = (import.meta.env.SITE || 'https://arkanuxui.github.io') + base;
 ---
 
 <!DOCTYPE html>
@@ -12,8 +14,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tailored Applications — Brand</title>
-  <meta name="description" content="The Tailored Applications brand hub: logo, color, typography, and tone & voice." />
+  <title>Tailored Applications — Brand Guidelines</title>
+  <meta name="description" content="The Tailored Applications brand hub — logo, color, typography, and tone & voice." />
+  <meta name="author" content="Tailored Applications" />
+  <link rel="canonical" href={`${siteUrl}/`} />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href={`${base}/favicon/Favicon.svg`} />
+  <link rel="icon" type="image/png" sizes="32x32" href={`${base}/favicon/favicon-32.png`} />
+  <link rel="apple-touch-icon" href={`${base}/favicon/apple-touch-icon.png`} />
+  <link rel="manifest" href={`${base}/site.webmanifest`} />
+
+  <!-- Open Graph / social share -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Tailored Applications" />
+  <meta property="og:title" content="Tailored Applications — Brand Guidelines" />
+  <meta property="og:description" content="The Tailored Applications brand hub — logo, color, typography, and tone & voice." />
+  <meta property="og:url" content={`${siteUrl}/`} />
+  <meta property="og:image" content={`${siteUrl}/social/og-image.jpg`} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tailored Applications — Brand Guidelines" />
+  <meta name="twitter:description" content="The Tailored Applications brand hub — logo, color, typography, and tone & voice." />
+  <meta name="twitter:image" content={`${siteUrl}/social/og-image.jpg`} />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -102,9 +127,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           Dark
         </button>
       </div>
-      <a class="download-all" href="#">
+      <a class="download-all" href={`${base}/downloads/tailored-applications-brand-assets.zip`} download>
         <span class="dl-icon">↓</span>
-        <span>Download Assets<small>.zip</small></span>
+        <span>Download Assets<small>ZIP · 6.4 MB</small></span>
       </a>
     </aside>
 

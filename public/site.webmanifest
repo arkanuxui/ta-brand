@@ -1,0 +1,17 @@
+{
+  "name": "Tailored Applications — Brand Guidelines",
+  "short_name": "TA Brand",
+  "description": "The Tailored Applications brand hub — logo, color, typography, and tone & voice.",
+  "start_url": "/ta-brand/",
+  "scope": "/ta-brand/",
+  "display": "standalone",
+  "background_color": "#101820",
+  "theme_color": "#ef3340",
+  "icons": [
+    { "src": "/ta-brand/favicon/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/ta-brand/favicon/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/ta-brand/favicon/favicon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/ta-brand/favicon/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/ta-brand/favicon/Favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

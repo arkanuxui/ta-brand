@@ -359,6 +359,8 @@ a { color: inherit; }
 .type-hero-glyph.arabic { font-family: var(--font-arabic); font-weight: 700; letter-spacing: 0; }
 .type-hero-info { min-width: 0; }
 .type-hero-info p { margin: 8px 0 0; color: var(--muted); max-width: 52ch; }
+.font-dl { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.04em; color: var(--label); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--label) 40%, transparent); padding-bottom: 2px; transition: border-color 120ms ease; }
+.font-dl:hover { border-color: var(--label); }
 .glyphset { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
 .glyph-row { font-family: var(--font-display); font-weight: 600; font-size: clamp(16px, 3.2vw, 28px); letter-spacing: 0.06em; color: var(--text); padding: 11px 0; border-bottom: 1px solid var(--line); word-break: break-word; }
 .glyph-row:last-child { border-bottom: 0; }
